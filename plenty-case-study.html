@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plenty Case Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Cabin:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Sierra's portfolio world: deep navy + teal. Plenty reveal switches to its own cream + plum. */
+  --bg:#122838; --panel:#0D2131; --line:#2B4556; --ink:#EAF1F4; --muted:#A9BCC8; --teal:#14A090; --teal-ink:#5FD3C4;
+  --cream:#FFF8F0; --plum:#3D2C5E; --plum-tint:#EDE7F4; --apricot:#F4A261; --sage-ink:#2F5A3C; --sage-tint:#E6F0E8; --slate:#2E3440; --card-line:#EADFD3;
+  --display:'Syne', 'Arial Black', sans-serif; --body:'Cabin', 'Segoe UI', sans-serif;
+  color-scheme: dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.6}
+a{color:var(--teal-ink)}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--teal-ink);outline-offset:3px;border-radius:6px}
+h1,h2,h3{font-family:var(--display);line-height:1.12;text-wrap:balance;margin:0}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.narrow{max-width:68ch}
+
+/* Stepper */
+.stepper{position:sticky;top:0;z-index:5;background:rgba(18,40,56,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(6px)}
+.stepper ol{list-style:none;margin:0 auto;padding:10px 24px;max-width:1080px;display:flex;gap:6px;flex-wrap:wrap}
+.stepper a{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;color:var(--muted);text-decoration:none;font-weight:600;font-size:15px;border:1px solid transparent}
+.stepper a .n{display:inline-flex;width:24px;height:24px;border-radius:999px;align-items:center;justify-content:center;border:1px solid var(--line);font-size:13px}
+.stepper a.on{color:var(--ink);border-color:var(--teal)}
+.stepper a.on .n{background:var(--teal);border-color:var(--teal);color:#06231f}
+
+/* Hero */
+.hero{padding:72px 0 48px}
+.kicker{font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--teal-ink)}
+.hero h1{font-size:clamp(38px,6vw,64px);margin:12px 0 18px}
+.hero p{color:var(--muted);font-size:20px;margin:0}
+.takeaway{margin-top:28px;padding:20px 22px;background:var(--panel);border:1px solid var(--line);border-radius:16px;font-size:19px}
+.takeaway strong{color:var(--teal-ink)}
+
+/* Sections */
+section.stage{padding:64px 0;border-top:1px solid var(--line)}
+.stage-head{display:flex;align-items:baseline;gap:16px;margin-bottom:14px}
+.stage-num{font-family:var(--display);font-weight:800;font-size:15px;color:#06231f;background:var(--teal);border-radius:999px;padding:4px 12px}
+.stage h2{font-size:clamp(30px,4vw,42px)}
+.lede{font-size:20px;color:var(--ink);margin:10px 0 0}
+p{margin:12px 0}
+.muted{color:var(--muted)}
+.family{margin-top:22px;padding:14px 18px;border:1px solid var(--line);border-radius:14px;background:rgba(20,160,144,.08);font-size:17px}
+.family b{color:var(--teal-ink)}
+.next{display:inline-flex;align-items:center;gap:10px;margin-top:26px;padding:14px 22px;border-radius:999px;background:var(--teal);color:#06231f;font-weight:700;text-decoration:none}
+.next:hover{background:var(--teal-ink)}
+
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:22px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px 20px}
+.card h3{font-size:19px;margin-bottom:6px}
+.card p{margin:6px 0;font-size:16px;color:var(--muted)}
+.tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.04em;padding:3px 9px;border-radius:999px;border:1px solid var(--line);color:var(--muted);margin-right:6px}
+.tag.teal{border-color:var(--teal);color:var(--teal-ink)}
+.tag.warn{border-color:#C9A227;color:#E7C65A}
+
+/* Evidence cards */
+details.ev{margin-top:12px;background:var(--panel);border:1px solid var(--line);border-radius:14px}
+details.ev summary{cursor:pointer;list-style:none;padding:14px 18px;font-weight:700;display:flex;justify-content:space-between;gap:12px;align-items:center}
+details.ev summary::-webkit-details-marker{display:none}
+details.ev summary::after{content:"+";font-family:var(--display);font-size:22px;color:var(--teal-ink)}
+details.ev[open] summary::after{content:"–"}
+details.ev .body{padding:0 18px 16px;font-size:16px}
+.ev-type{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--teal-ink);margin-right:8px}
+blockquote{margin:10px 0;padding:12px 16px;border-left:3px solid var(--teal);background:rgba(255,255,255,.03);border-radius:0 10px 10px 0;font-size:15.5px;color:var(--ink);white-space:pre-line}
+.cite{font-size:13px;color:var(--muted)}
+.todo{border:1px dashed #C9A227;color:#E7C65A;border-radius:12px;padding:10px 14px;font-size:15px;margin-top:10px}
+
+/* Tables */
+.tbl{overflow-x:auto;margin-top:20px;border:1px solid var(--line);border-radius:14px}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:15.5px}
+th,td{padding:12px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{font-family:var(--display);font-size:14px;color:var(--teal-ink);background:var(--panel)}
+tr:last-child td{border-bottom:none}
+
+/* Method strip */
+.loop{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.loop span{padding:8px 12px;border-radius:999px;border:1px solid var(--line);font-size:15px;font-weight:600}
+.loop span b{color:var(--teal-ink)}
+
+/* Rubric */
+.rubric{display:grid;gap:10px;margin-top:20px}
+.rrow{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.6fr);gap:16px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 18px}
+.rrow .q{font-weight:700}
+.rrow .fail{font-size:15.5px;color:var(--muted)}
+.rrow .fail b{color:#F2B8A0}
+@media (max-width:640px){.rrow{grid-template-columns:1fr}}
+
+/* Refine steps */
+.chain{display:grid;gap:12px;margin-top:20px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.step{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
+.step .lbl{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--teal-ink)}
+.step p{font-size:15.5px;margin:6px 0 0}
+
+/* Plenty reveal */
+.plenty{background:var(--cream);color:var(--slate);border-top:none}
+.plenty h2,.plenty h3{font-family:'Fraunces',Georgia,serif;color:var(--plum)}
+.plenty .lede,.plenty p{color:var(--slate)}
+.plenty .stage-num{background:var(--plum);color:var(--cream)}
+.plenty .muted{color:#5B5F6B}
+.p-hero{display:flex;flex-wrap:wrap;gap:36px;align-items:center;margin-top:18px}
+.p-copy{flex:999 1 420px;min-width:0}
+.phone{flex:1 1 260px;max-width:290px;margin:0 auto;background:#2E3440;border-radius:36px;padding:10px}
+.screen{background:var(--cream);border-radius:28px;padding:18px 16px;display:flex;flex-direction:column;gap:10px;font-family:'Nunito',sans-serif}
+.runway{background:var(--plum);color:var(--cream);border-radius:18px;padding:14px}
+.runway .eb{font-size:11px;font-weight:800;color:var(--apricot)}
+.runway .big{font-family:'Fraunces',serif;font-weight:700;font-size:28px}
+.bubble{align-self:flex-start;max-width:92%;padding:9px 12px;border-radius:14px;background:var(--plum-tint);font-size:13px;line-height:1.4}
+.plenty .tbl{border-color:var(--card-line)}
+.plenty th{background:var(--plum-tint);color:var(--plum);font-family:'Nunito',sans-serif;font-weight:800}
+.plenty td{border-color:var(--card-line)}
+.status{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin-top:20px}
+.st{background:#fff;border:1px solid var(--card-line);border-radius:18px;padding:16px 18px}
+.st h3{font-size:19px;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.st ul{margin:6px 0 0;padding-left:18px;font-size:15.5px}
+.dot{width:12px;height:12px;border-radius:999px;display:inline-block}
+.plenty details.ev{background:#fff;border-color:var(--card-line);color:var(--slate)}
+.plenty details.ev summary::after{color:var(--plum)}
+.plenty .todo{border-color:#B07A00;color:#7A5300}
+.plenty .next{background:var(--plum);color:var(--cream)}
+
+footer{padding:56px 0 64px;border-top:1px solid var(--line)}
+footer .takeaway{margin-top:0}
+.plenty blockquote{background:var(--plum-tint);border-left-color:var(--plum);color:var(--slate)}
+.plenty .ev-type{color:var(--plum)}
+.checks li{margin:4px 0}
+.ok{color:#2F5A3C;font-weight:700}
+.untested{color:#7A5300;font-weight:700}
+</style>
+<style>
+/* Freezer Dash game: Plenty cream + plum theme */
+.fd-launch{display:inline-flex;align-items:center;gap:12px;margin-top:22px;padding:16px 26px;border:0;border-radius:999px;background:#3D2C5E;color:#FFF8F0;font:800 19px/1.2 'Nunito',sans-serif;cursor:pointer;box-shadow:0 6px 0 #574578}
+.fd-launch:hover{background:#574578}
+.fd-launch:active{transform:translateY(3px);box-shadow:0 3px 0 #574578}
+.fd-launch .fd-ico{display:inline-flex;width:30px;height:30px;border-radius:999px;background:#F4A261;color:#3D2C5E;align-items:center;justify-content:center;font-size:14px}
+.fd-launch-note{font-size:15px;color:#5B5F6B;margin-top:10px}
+
+dialog.fd{--plum:#3D2C5E;--plum2:#574578;--plum-t:#EDE7F4;--apr:#F4A261;--apr-t:#FDEBDC;--cream:#FFF8F0;--sage:#7FA88A;--sage-t:#E6F0E8;--sage-d:#2F5A3C;--slate:#2E3440;--mut:#5B5F6B;--bd:#EADFD3;--red:#9B2C2C;--red-t:#FBE9E7;
+  width:min(940px,100vw);max-height:min(92vh,100dvh);padding:0;border:0;border-radius:22px;background:var(--cream);color:var(--slate);font-family:'Nunito',system-ui,sans-serif;font-size:16px;line-height:1.5;color-scheme:light}
+dialog.fd::backdrop{background:rgba(30,22,48,.72)}
+@media (max-width:640px){dialog.fd{width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;border-radius:0;margin:0}}
+.fd *{box-sizing:border-box}
+.fd h2,.fd h3,.fd h4{font-family:'Fraunces',Georgia,serif;color:var(--plum);margin:0;line-height:1.15}
+.fd button{font-family:inherit}
+.fd button:focus-visible,.fd summary:focus-visible{outline:3px solid var(--apr);outline-offset:2px}
+.fd-top{position:sticky;top:0;z-index:2;background:var(--cream);border-bottom:1px solid var(--bd);padding:14px 20px 10px}
+.fd-bar{display:flex;align-items:center;gap:12px}
+.fd-bar h2{font-size:24px;flex:1}
+.fd-x{border:1px solid var(--bd);background:#fff;border-radius:999px;padding:8px 14px;font-weight:800;color:var(--plum);cursor:pointer}
+.fd-steps{display:flex;gap:6px;flex-wrap:wrap;list-style:none;margin:10px 0 0;padding:0;font-size:13px;font-weight:800}
+.fd-steps li{padding:4px 10px;border-radius:999px;background:#fff;border:1px solid var(--bd);color:var(--mut)}
+.fd-steps li.on{background:var(--plum);border-color:var(--plum);color:var(--cream)}
+.fd-steps li.done{background:var(--sage-t);border-color:var(--sage);color:var(--sage-d)}
+.fd-body{padding:18px 20px 26px}
+.fd-sample{font-size:13px;color:var(--mut);background:var(--apr-t);border-radius:10px;padding:8px 12px;margin-bottom:14px}
+.fd-sample b{color:var(--slate)}
+.fd-lede{font-size:17px;margin:4px 0 14px}
+.fd-msg{min-height:1.5em;font-weight:700;color:var(--plum2);margin:8px 0}
+.fd-msg.err{color:var(--red)}
+
+.fd-crew{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.fd-person{text-align:left;border:2px solid var(--bd);background:#fff;border-radius:16px;padding:14px;cursor:pointer;color:var(--slate)}
+.fd-person[aria-pressed="true"]{border-color:var(--plum);background:var(--plum-t)}
+.fd-person .nm{font-family:'Fraunces',serif;font-weight:700;font-size:20px;color:var(--plum);display:flex;justify-content:space-between;align-items:center}
+.fd-person .ck{width:24px;height:24px;border-radius:7px;border:2px solid var(--plum);display:inline-flex;align-items:center;justify-content:center;font-size:14px;color:var(--cream)}
+.fd-person[aria-pressed="true"] .ck{background:var(--plum)}
+.fd-person .role{font-size:13px;font-weight:800;color:var(--mut);text-transform:uppercase;letter-spacing:.04em}
+.fd-person .ex{margin:8px 0 6px;font-size:14px}
+.fd-chip{display:inline-block;font-size:12px;font-weight:800;padding:2px 8px;border-radius:999px;margin:2px 4px 2px 0;background:var(--sage-t);color:var(--sage-d)}
+.fd-chip.no{background:var(--red-t);color:var(--red)}
+.fd-chip.grown{background:var(--plum);color:var(--cream)}
+.fd-chip.apr{background:var(--apr-t);color:#7A3E12}
+.fd-person .jobs{font-size:13.5px;color:var(--mut)}
+
+.fd-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;align-items:center}
+.fd-btn{border:0;border-radius:999px;padding:12px 20px;font-weight:800;font-size:16px;cursor:pointer;background:var(--plum);color:var(--cream)}
+.fd-btn:hover{background:var(--plum2)}
+.fd-btn.alt{background:#fff;color:var(--plum);border:2px solid var(--plum)}
+.fd-btn.apr{background:var(--apr);color:var(--plum)}
+.fd-btn:disabled{opacity:.45;cursor:not-allowed}
+
+.fd-clockrow{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;background:var(--plum);color:var(--cream);border-radius:18px;padding:14px 18px;margin-bottom:14px}
+.fd-clock{font-family:'Fraunces',serif;font-weight:700;font-size:44px;font-variant-numeric:tabular-nums;line-height:1}
+.fd-clock.low{color:var(--apr)}
+.fd-clocklbl{font-size:12px;font-weight:800;letter-spacing:.06em;color:var(--apr)}
+.fd-clockrow .fd-btn{background:var(--cream);color:var(--plum);padding:9px 16px;font-size:15px}
+.fd-clockrow .fd-btn.alt{background:transparent;color:var(--cream);border-color:var(--cream)}
+
+.fd-tabs{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 10px}
+.fd-tab{border:2px solid var(--bd);background:#fff;border-radius:999px;padding:7px 14px;font-weight:800;cursor:pointer;color:var(--slate);display:inline-flex;gap:8px;align-items:center}
+.fd-tab[aria-selected="true"]{border-color:var(--plum);background:var(--plum);color:var(--cream)}
+.fd-ind{display:inline-flex;min-width:22px;height:22px;padding:0 6px;border-radius:999px;align-items:center;justify-content:center;font-size:12px;background:var(--bd);color:var(--slate)}
+.fd-ind.has{background:var(--sage);color:#fff}
+.fd-lbl{font-size:12px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--mut);margin-top:6px}
+
+.fd-items{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.fd-item{border:2px solid var(--bd);background:#fff;border-radius:14px;padding:10px 12px;text-align:left;cursor:pointer;color:var(--slate);font-weight:700;min-height:58px}
+.fd-item[aria-pressed="true"]{border-color:var(--sage);background:var(--sage-t)}
+.fd-item:disabled{cursor:not-allowed;background:#F5F1EC;color:#8B8F98}
+.fd-item small{display:block;font-weight:700;font-size:12px;color:var(--red)}
+.fd-item:disabled small{color:var(--red)}
+.fd-item .in{display:block;font-size:12px;color:var(--sage-d)}
+
+.fd-basket{margin-top:16px;background:#fff;border:1px solid var(--bd);border-radius:16px;padding:12px 14px}
+.fd-basket h4{font-size:17px;margin-bottom:6px}
+.fd-brow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:6px 0;border-top:1px solid var(--bd)}
+.fd-brow:first-of-type{border-top:0}
+.fd-brow .who{font-weight:800;min-width:90px}
+.fd-pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:3px 4px 3px 10px;background:var(--plum-t);font-size:14px;font-weight:700}
+.fd-pill button{border:0;background:#fff;border-radius:999px;width:24px;height:24px;cursor:pointer;color:var(--plum);font-weight:800}
+
+.fd-grid2{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.fd-card{background:#fff;border:1px solid var(--bd);border-radius:16px;padding:14px}
+.fd-card h4{font-size:18px;margin-bottom:6px}
+.fd-card ul{margin:6px 0 0;padding-left:18px}
+.fd-verdict{border-radius:16px;padding:14px 16px;margin:12px 0;font-weight:700}
+.fd-verdict.pass{background:var(--sage-t);color:var(--sage-d)}
+.fd-verdict.miss{background:var(--apr-t);color:#7A3E12}
+.fd-rules{font-size:14px;color:var(--mut);margin:6px 0 0;padding-left:18px}
+
+.fd-shelf{display:grid;gap:8px}
+.fd-sh{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;background:#fff;border:1px solid var(--bd);border-radius:14px;padding:10px 12px}
+.fd-sh .d{font-size:13px;color:var(--mut)}
+.fd-sh.keep,.fd-sh.past{background:#F5F1EC}
+.fd-sh .st{font-size:13px;font-weight:800}
+.fd-sh.eligible .st{color:var(--sage-d)}
+.fd-sh.keep .st{color:var(--mut)}
+.fd-sh.past .st{color:var(--red)}
+
+.fd-meal{background:var(--plum);color:var(--cream);border-radius:20px;padding:18px}
+.fd-meal h3{color:var(--cream);font-size:30px}
+.fd-meal .eb{font-size:12px;font-weight:800;letter-spacing:.06em;color:var(--apr)}
+.fd-jobs{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.fd-jobs li{display:grid;grid-template-columns:110px 1fr;gap:10px;background:#fff;border:1px solid var(--bd);border-radius:12px;padding:10px 12px;font-size:15px}
+.fd-jobs .a{font-weight:800;color:var(--plum)}
+.fd-badges{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+.fd-badge{border-radius:14px;padding:10px 12px;background:var(--apr-t);border:2px solid var(--apr)}
+.fd-badge b{display:block;color:var(--plum);font-family:'Fraunces',serif;font-size:17px}
+.fd-badge span{font-size:13px;color:var(--mut)}
+.fd-badge.not{background:#fff;border:1px dashed var(--bd)}
+.fd-badge.not b{color:var(--mut)}
+.fd-sec{margin-top:20px}
+.fd-sec>h3{font-size:21px;margin-bottom:8px}
+.fd-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:no-preference){
+  .fd-item[aria-pressed="true"]{animation:fdpop .18s ease-out}
+  @keyframes fdpop{from{transform:scale(.96)}to{transform:scale(1)}}
+}
+
+.fd-mini{font-family:'Fraunces',serif;font-weight:700;font-size:20px;font-variant-numeric:tabular-nums;background:var(--plum);color:var(--cream);border-radius:999px;padding:4px 12px}
+.fd-mini.low{background:var(--apr);color:var(--plum)}
+@media (max-width:640px){
+  .fd-bar h2{font-size:21px}
+  .fd-steps{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  .fd-steps li{white-space:nowrap}
+  .fd-top{padding:10px 14px 8px}.fd-body{padding:14px 14px 22px}
+  .fd-clock{font-size:36px}
+}
+</style>
+</head>
+<body>
+
+<nav class="stepper" aria-label="Case study steps">
+  <ol>
+    <li><a href="#why" data-step="why"><span class="n">1</span>Why</a></li>
+    <li><a href="#research" data-step="research"><span class="n">2</span>Research</a></li>
+    <li><a href="#prompt" data-step="prompt"><span class="n">3</span>Prompt</a></li>
+    <li><a href="#evaluate" data-step="evaluate"><span class="n">4</span>Evaluate</a></li>
+    <li><a href="#refine" data-step="refine"><span class="n">5</span>Refine</a></li>
+    <li><a href="#plenty" data-step="plenty"><span class="n">6</span>Plenty</a></li>
+  </ol>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">Case study · AI product development · Sierra Hall</div>
+    <h1>From "what's for dinner?" to a product I could defend</h1>
+    <p class="narrow">How I turned an everyday family problem into a researched, evaluated AI product concept, and what I did when the AI got it wrong.</p>
+    <div class="takeaway narrow"><strong>The short version:</strong> I identified a meaningful problem, investigated it, translated it into clear AI instructions, evaluated the results, and guided the work toward a useful product.</div>
+    <div class="loop" aria-label="Tools and their roles">
+      <span><b>ChatGPT</b> · synthesis partner</span>
+      <span><b>Copilot</b> · enterprise thinking partner</span>
+      <span><b>Gemini NotebookLM</b> · research partner</span>
+      <span><b>Claude</b> · independent reviewer</span>
+      <span><b>Lovable</b> · builder</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- 1 WHY -->
+<section class="stage" id="why">
+  <div class="wrap">
+    <div class="stage-head"><span class="stage-num">01</span><h2>Why this problem</h2></div>
+    <div class="narrow">
+      <p class="lede">I'm a mother and a chef. In my house, grocery shopping is never one decision. It's money, time, everyone's preferences, the kids, what's already in the fridge, and the real question: what will everyone actually eat?</p>
+      <p>Most tools solve one piece. A list app doesn't know when payday is. A budget app doesn't know my kids won't touch mushrooms. A store's app wants me to buy more. I wanted to know whether a planner could hold all of it at once, and whether AI could help me build it responsibly.</p>
+      <p class="muted">My working philosophy carried into this project: technology doesn't create transformation, people do. So I started with the people and the decision they face, not with the technology.</p>
+    </div>
+    <div class="family"><b>For the family:</b> the goal was never a smarter app. It was a mom feeling sure her family will eat well until the next paycheck.</div>
+
+    <details class="ev"><summary><span><span class="ev-type">Prompt</span>My first brief, before any research</span></summary><div class="body">
+      <p>My opening request to ChatGPT described the whole wish list at once:</p>
+      <blockquote>"I want the app budget based on their set spending limit, how often they get paid, have the option to pull all store sales ads within up to a 50 mile radius … it should know favorites of the household … it should be able to create most cost effective shopping plan as a personal shopper along with time it will take to get all shopping/pickups done."</blockquote>
+      <p class="cite">Excerpt, lightly corrected for spelling. Source: my original ChatGPT conversation.</p>
+      <p>I then asked for <b>professional feedback, not flattery</b>: build needs, risk, and what it would take to launch.</p>
+    </div></details>
+
+    <a class="next" href="#research">Next: what I checked before building →</a>
+  </div>
+</section>
+
+<!-- 2 RESEARCH -->
+<section class="stage" id="research">
+  <div class="wrap">
+    <div class="stage-head"><span class="stage-num">02</span><h2>Research: separating what's true from what sounds true</h2></div>
+    <div class="narrow">
+      <p class="lede">My first idea tried to solve seven problems at once. Before building anything, I narrowed it to one defined question and tested every claim around it.</p>
+      <p><b>The defined problem:</b> "Will my groceries make it to payday?" for busy moms, single parents and women with young children.</p>
+      <p>I ran the research in source-grounded notebooks with explicit rules: label every claim PROVEN, SUPPORTED or UNPROVEN, cite the source, and say "Not in sources" instead of guessing.</p>
+    </div>
+
+    <div class="tbl" role="region" aria-label="Research questions, sources, findings and decisions" tabindex="0">
+      <table>
+        <thead><tr><th>Question</th><th>Source</th><th>Finding</th><th>Product decision</th></tr></thead>
+        <tbody>
+          <tr><td>Is the problem real for single moms?</td><td>USDA Economic Research Service, <i>Household Food Security in the United States in 2024</i> (Dec 2025)</td><td>36.8% of single-mother households were food insecure in 2024</td><td>Kept the problem; the figure appears once, cited, on the partner page</td></tr>
+          <tr><td>Is a budget-aware AI grocery list already done?</td><td><a href="https://openai.com/index/instacart-partnership">OpenAI × Instacart</a>; <a href="https://chainstoreage.com/walmart-puts-sparky-next-generation-ai-assistant-wide-release">Walmart Sparky coverage</a></td><td>Retailer AI already builds budget carts, and it's built around store sales</td><td>Positioning: "the grocery planner on your side of the receipt"</td></tr>
+          <tr><td>Do standalone planners survive?</td><td><a href="https://www.mealime.com/closing">Mealime's closing notice</a>; <a href="https://techcrunch.com/2026/10/30/ollie-a-privacy-focused-ai-assistant-is-shutting-down/">TechCrunch on Ollie</a></td><td>Mealime closed Oct 21, 2026; Ollie closed Nov 6, 2026 after a $7.5M seed round</td><td>No family subscription; free to families, sponsor-paid</td></tr>
+          <tr><td>Can the app promise 10–12% savings?</td><td>USDA spending data vs. the Thrifty Food Plan</td><td>Families in this group already spend near the federal minimum food budget</td><td>Dropped the savings promise; outcome became "food money lasts until payday"</td></tr>
+          <tr><td>Can sponsors fund a for-profit tool directly?</td><td>Daniel Foundation of Alabama and Community Foundation of Greater Birmingham grant guidelines</td><td>501(c)(3) applicants only; the Community Foundation allows fiscal sponsors</td><td>A nonprofit partner applies; the platform is the vendor</td></tr>
+          <tr><td>Is SNAP-Ed a funder?</td><td><a href="https://food.unl.edu/update-snap-ed-programming">University of Nebraska–Lincoln Extension</a></td><td>Federal SNAP-Ed funding ended Sept 30, 2025</td><td>Removed as a payer; former partners become distribution only</td></tr>
+          <tr><td>Can an AI agent shop for her?</td><td><a href="https://docs.instacart.com/developer_platform_api/api/products/create_shopping_list_page">Instacart Developer Platform docs</a></td><td>Apps can hand off a shoppable list link; access requires approval</td><td>Plan and hand off only; never autonomous purchasing</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="margin-top:36px;font-size:24px">Five lines I didn't let blur</h3>
+    <div class="grid">
+      <div class="card"><h3>Assumption vs. fact</h3><p>The 10–12% savings target came from my own planning. I relabeled it a founder assumption until receipts prove otherwise.</p></div>
+      <div class="card"><h3>Documentation vs. marketing</h3><p>I replaced competitor "alternatives" blogs with Mealime's own shutdown notice, and dropped a low-quality market-size report.</p></div>
+      <div class="card"><h3>Possible vs. accessible</h3><p>An Instacart integration is technically possible; it still needs an application and approval I don't have.</p></div>
+      <div class="card"><h3>Proposed price vs. willingness to pay</h3><p>$6.99/month was a hypothesis. My rubric counts only real payments or sponsor commitments, not "I would pay."</p></div>
+      <div class="card"><h3>Sample vs. measured</h3><p>Every dashboard number in the prototype is labeled sample data. Nothing here is a pilot result.</p></div>
+    </div>
+
+    <details class="ev"><summary><span><span class="ev-type">Finding</span>The research that changed the product</span></summary><div class="body">
+      <p>The notebook found that food insecurity in this group is driven mainly by income and prices, not budgeting mistakes. Software can't create money. That pushed two changes:</p>
+      <p>1. The outcome moved from "dollars saved" to <b>"did your food last until payday?"</b>, a question families can answer even when income doesn't change.<br>2. The product added <b>connections to food help families may be missing</b> (WIC, school meals, pantries), which adds resources instead of only optimizing them.</p>
+    </div></details>
+
+    <div class="family"><b>For the family:</b> I wouldn't promise a mom savings she can't get. I'd promise a plan that stretches what she has, and help finding more.</div>
+    <a class="next" href="#prompt">Next: how I directed the AI →</a>
+  </div>
+</section>
+
+<!-- 3 PROMPT -->
+<section class="stage" id="prompt">
+  <div class="wrap">
+    <div class="stage-head"><span class="stage-num">03</span><h2>Prompting: giving the AI rules, not wishes</h2></div>
+    <div class="narrow">
+      <p class="lede">I treated each AI tool as a team member with a role, and gave it context, constraints, a required output format and a way to admit uncertainty.</p>
+    </div>
+    <div class="grid">
+      <div class="card"><h3>Context</h3><p>Who it's for, the positioning, and what was already decided, so answers built on the plan instead of restarting it.</p></div>
+      <div class="card"><h3>Constraints</h3><p>Label every claim; cite sources; no invented numbers; cut features stay cut.</p></div>
+      <div class="card"><h3>Output shape</h3><p>Tables, rankings and rubrics I could check, ending with "the single biggest weakness in your own recommendation."</p></div>
+      <div class="card"><h3>Sequencing</h3><p>One prompt at a time. Each answer was reviewed before the next prompt went out.</p></div>
+    </div>
+
+    <details class="ev"><summary><span><span class="ev-type">Prompt</span>Setting the rules for Copilot (my enterprise thinking partner)</span></summary><div class="body">
+      <blockquote>"You're my startup advisor for a family grocery planning venture. Act as a skeptical product strategist and investor, not a cheerleader. Rules for every answer:
+- Label each claim as VERIFIED (with a source link), ESTIMATE, or OPINION.
+- If you don't know something, say so instead of guessing.
+- End each answer with the single biggest weakness in your own recommendation."</blockquote>
+      <p class="cite">Prompt 1 of 15 in the Copilot planning record. Prompts were drafted with Claude as a thinking partner; I set the direction, sequenced and sent them.</p>
+    </div></details>
+
+    <details class="ev"><summary><span><span class="ev-type">Direction</span>My own steering, in my words</span></summary><div class="body">
+      <p>These are the instructions I gave while shaping the prompts (lightly corrected for spelling):</p>
+      <blockquote>"Identify the top 3 problems this website/app will solve. NO ideas. I need 10 solutions for each problem."</blockquote>
+      <blockquote>"My target audience are busy moms, single parents, women with SMALL kids, NOT JUST FAMILIES."</blockquote>
+      <blockquote>"DO NOT LIST OUT THE PRODUCTS. ONLY list the digital products trending for that solution."</blockquote>
+      <blockquote>"WE NEED PROVEN AND SOURCED, fact-driven research. It also needs to address our rubric, act as investor and show us the gaps and what would truly differentiate us."</blockquote>
+    </div></details>
+
+    <details class="ev"><summary><span><span class="ev-type">Response</span>An answer worth keeping</span></summary><div class="body">
+      <blockquote>"The core asset is not grocery planning. The core asset is: helping a mom feel confident that her food budget will make it to payday without carrying the entire mental load herself."</blockquote>
+      <p class="cite">Copilot, Prompt 11 (five guiding questions). I kept this framing and tested it against research before adopting it.</p>
+    </div></details>
+
+    <details class="ev"><summary><span><span class="ev-type">Prompt</span>Rules for the builder (Lovable project brief)</span></summary><div class="body">
+      <blockquote>"All data is SAMPLE data. … Allergies are hard filters: never show a meal containing a listed allergen. … Do NOT build: multi-store price comparison, pantry inventory tracking, delivery ordering, store account connections, or automatic purchasing."</blockquote>
+      <p class="cite">Excerpt from the Plenty project brief loaded before any build.</p>
+    </div></details>
+
+    <div class="family"><b>For the family:</b> clear rules up front meant the AI couldn't quietly turn a mom's planner into a store's sales tool.</div>
+    <a class="next" href="#evaluate">Next: how I judged the answers →</a>
+  </div>
+</section>
+
+<!-- 4 EVALUATE -->
+<section class="stage" id="evaluate">
+  <div class="wrap">
+    <div class="stage-head"><span class="stage-num">04</span><h2>Evaluation: what a good answer looks like</h2></div>
+    <div class="narrow">
+      <p class="lede">I scored AI responses against seven questions. Each one below is paired with a real response that failed it during this project.</p>
+    </div>
+    <div class="rubric">
+      <div class="rrow"><div class="q">1. Does it address the household's actual need?</div><div class="fail"><b>Failed:</b> plans promised 10–12% grocery savings to families already spending near the federal minimum.</div></div>
+      <div class="rrow"><div class="q">2. Does it follow the stated constraints?</div><div class="fail"><b>Failed:</b> a research summary brought back "multi-store, pantry-first" planning, two features I had cut.</div></div>
+      <div class="rrow"><div class="q">3. Are calculations correct?</div><div class="fail"><b>Failed:</b> a rubric score of 91.7 counted national statistics as if they were interviews with local moms.</div></div>
+      <div class="rrow"><div class="q">4. Are claims supported?</div><div class="fail"><b>Failed:</b> a "60–70% churn" figure appeared three times with no real source, and a sponsor model was labeled PROVEN with no sponsor conversations.</div></div>
+      <div class="rrow"><div class="q">5. Does it identify missing information?</div><div class="fail"><b>Failed:</b> grant plans skipped eligibility; the key foundations fund 501(c)(3) nonprofits only.</div></div>
+      <div class="rrow"><div class="q">6. Is the language clear, useful and respectful?</div><div class="fail"><b>Revised:</b> "eliminated" works on TV, not for a 3-year-old at dinner. The game now offers a bonus round instead.</div></div>
+      <div class="rrow"><div class="q">7. Does it preserve the intended product scope?</div><div class="fail"><b>Failed:</b> a plan recommended human-assisted operations, the labor cost that shut down a competitor.</div></div>
+    </div>
+
+    <details class="ev"><summary><span><span class="ev-type">Critique</span>Why the 91.7 score was rejected</span></summary><div class="body">
+      <p>The rubric defines most Gate 1 criteria by field evidence ("X of 40 interviews," "sponsors request follow-up"). The notebook scored them from national data. Rescored honestly, desk research could support only about 49% of the gate, at roughly 62/100, with zero sponsor conversations scoring 1 of 5.</p>
+      <p class="cite">That's the expected position before field research, and it set up the next phase instead of a false "Go."</p>
+    </div></details>
+
+    <div class="family"><b>For the family:</b> a confident wrong answer is worse than "we don't know yet." The rubric kept the project honest about both.</div>
+    <a class="next" href="#refine">Next: how the work got better →</a>
+  </div>
+</section>
+
+<!-- 5 REFINE -->
+<section class="stage" id="refine">
+  <div class="wrap">
+    <div class="stage-head"><span class="stage-num">05</span><h2>Refinement: output, critique, new instruction, better result</h2></div>
+    <div class="narrow">
+      <p class="lede">I ran a cross-model review: Copilot drafted, NotebookLM researched, Claude reviewed the outputs at my direction, and I made the calls.</p>
+    </div>
+
+    <h3 style="margin-top:28px;font-size:22px">Documented example: the venture rubric</h3>
+    <div class="chain">
+      <div class="step"><div class="lbl">1 · Output</div><p>Rubric v1: six weighted sections in one score, mixing before-launch guesses with after-pilot results.</p></div>
+      <div class="step"><div class="lbl">2 · Critique</div><p>No money criterion, no allergy-safety stop, criteria counted twice, and scores described as feelings ("some focus").</p></div>
+      <div class="step"><div class="lbl">3 · Revised instruction</div><p>"Split it into two gates … Add a willingness-to-pay / sponsor criterion … Add an allergy-safety kill criterion … Rewrite every 1/3/5 description as a number or observable evidence."</p></div>
+      <div class="step"><div class="lbl">4 · Result</div><p>Rubric v2.0: Gate 1 before building, Gate 2 after a 90-day pilot, with kill criteria including "any allergen recommendation pauses the pilot."</p></div>
+    </div>
+
+    <details class="ev"><summary><span><span class="ev-type">Prompt</span>The full correction instruction</span></summary><div class="body">
+      <blockquote>"Revise the master rubric with these fixes:
+1. Split it into two gates. Gate 1 (before building) … Gate 2 (after a 90-day, 50-user pilot) …
+2. Add a willingness-to-pay / sponsor criterion and a kill criterion for no payment or sponsor evidence.
+3. Add an allergy-safety kill criterion: any known allergen violation stops the pilot until fixed.
+4. Remove double counting …
+5. Rewrite every 1/3/5 description as a number or observable evidence.
+6. Add the missing MVP metrics …
+7. Only receipt-backed savings may be shown to users.
+8. Add research stopping rules, a one-page scorecard, and the 3 criteria most likely to fail."</blockquote>
+    </div></details>
+
+    <h3 style="margin-top:32px;font-size:22px">More course corrections</h3>
+    <div class="grid">
+      <div class="card"><span class="tag teal">Business model</span><h3>SNAP-Ed removed as a funder</h3><p>The notebook ranked it a top sponsor. I verified the program's federal funding had ended in 2025 and removed it.</p></div>
+      <div class="card"><span class="tag teal">Safety</span><h3>Allergy filter fixed in the build plan</h3><p>The first build plan filtered peanuts only. The corrected plan excludes peanuts and mushrooms through one shared filter, with tests for both.</p></div>
+      <div class="card"><span class="tag teal">Brand</span><h3>"Chopped at Home" became Freezer Dash</h3><p>My game idea kept its spirit and dropped a TV show's trademarked name.</p></div>
+      <div class="card"><span class="tag teal">Design</span><h3>First homepage rejected</h3><p>The first generated homepage didn't fit the brand. I reset the direction to warm cream and plum.</p><div class="todo">Evidence to add: before/after screenshots.</div></div>
+    </div>
+
+    <details class="ev"><summary><span><span class="ev-type">Note</span>About "AI training"</span></summary><div class="body">
+      <p>I did not train or fine-tune a model. My work was <b>prompt design, response evaluation, rubric development and iterative refinement</b>: directing model behavior through instructions, examples, evaluation criteria and feedback, and verifying claims against primary sources.</p>
+    </div></details>
+
+    <div class="family"><b>For the family:</b> every correction moved the product closer to what a tired mom needs on a Tuesday night, and further from what's easy to build.</div>
+    <a class="next" href="#plenty">Next: meet Plenty →</a>
+  </div>
+</section>
+
+<!-- 6 PLENTY -->
+<section class="stage plenty" id="plenty">
+  <div class="wrap">
+    <div class="stage-head"><span class="stage-num">06</span><h2>Meet Plenty</h2></div>
+    <div class="p-hero">
+      <div class="p-copy">
+        <p class="lede"><b>Plenty</b> is a free, text-first grocery planner that helps busy moms make their food money last until payday, and points them to food help they may be missing. Community partners pay for it. Stores never do.</p>
+        <p>Tagline: <i>Peace of mind between paydays.</i> Its main feature, Payday Peace of Mind, plans around the pay cycle instead of a single shopping trip.</p>
+        <p class="muted">Concept prototype. Every number shown is sample data.</p>
+        <button class="fd-launch" type="button" data-fd-open aria-haspopup="dialog"><span class="fd-ico" aria-hidden="true">▶</span>Play Freezer Dash</button>
+        <p class="fd-launch-note">My family dinner game, playable right here. Pick a crew, race the 7-minute clock, and see what dinner your basket makes. No time? Choose <b>Quick demo</b>.</p>
+      </div>
+      <div class="phone" aria-label="Sample Plenty screen">
+        <div class="screen">
+          <div style="font-family:'Fraunces',serif;font-weight:700;color:var(--plum);font-size:17px">Your runway</div>
+          <div class="runway"><div class="eb">PAYDAY PEACE OF MIND</div><div class="big">6 days · $86</div><div style="font-size:12px;font-weight:700">About $14 a day. On track.</div></div>
+          <div class="bubble">Payday's Friday! Check these 5 before you shop: rice, eggs, tortillas, frozen veggies, cheese.</div>
+          <div class="bubble">Running tight? Reply TIGHT and we'll stretch what's left with you.</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:36px;font-size:26px">Where the decisions show up</h3>
+    <div class="tbl" role="region" aria-label="Decisions and where they appear" tabindex="0">
+      <table>
+        <thead><tr><th>Decision</th><th>Where it shows in Plenty</th></tr></thead>
+        <tbody>
+          <tr><td>Lead with money, deliver relief</td><td>The Runway home screen: days to payday, money left, a done-for-you plan</td></tr>
+          <tr><td>Outcome is "food lasts until payday"</td><td>The Check In question each cycle; the Partner View before/during comparison</td></tr>
+          <tr><td>Free to families, sponsor-paid</td><td>How We Make Money page; Partner View for sponsors</td></tr>
+          <tr><td>Never buy on her behalf</td><td>No checkout or store logins anywhere</td></tr>
+          <tr><td>Allergies are hard filters</td><td>Onboarding step 4, every meal, every game round</td></tr>
+          <tr><td>Add resources, not only optimize</td><td>Find Food Help: WIC check, school meals, pantries</td></tr>
+          <tr><td>My additions as a mom and chef</td><td><b>Freezer Dash</b> (7-minute family game: 1 veggie + 1 starch), the <b>Use-It-Up round</b> (grown-ups add only food expiring before payday), and <b>The Table</b> (a no-judgment community)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="margin-top:36px;font-size:26px">What's real today</h3>
+    <div class="status">
+      <div class="st"><h3><span class="dot" style="background:#2F5A3C"></span>Built and working</h3><ul><li><b>Freezer Dash, playable on this page:</b> crew selection, 7-minute clock, basket building, judges, bonus round, Use-It-Up, dinner matching, jobs and badges</li><li>Interactive design prototype: 17 screens where the timer, tone switch, check-ins and game rules work</li></ul><div class="todo">Evidence to add: which Lovable screens are built and working.</div></div>
+      <div class="st"><h3><span class="dot" style="background:#F4A261"></span>Simulated with sample data</h3><ul><li>Freezer Dash crew, freezer shelf, package dates and payday</li><li>Freezer Dash dinners (23 rule-based templates, not AI)</li><li>Runway, Plan, Texts and Check In</li><li>The Table posts</li><li>Partner View numbers and food-help listings</li></ul></div>
+      <div class="st"><h3><span class="dot" style="background:#3D2C5E"></span>Planned</h3><ul><li>Real household profiles and pantry</li><li>Real text messaging</li><li>Receipt reading</li><li>AI meal generation</li><li>Partner logins and roles</li><li>Field research: 40 interviews, a landing-page test, 5 sponsor conversations</li></ul></div>
+      <div class="st"><h3><span class="dot" style="background:#9AA0A6"></span>Depends on outside access</h3><ul><li>Instacart Developer Platform approval</li><li>A nonprofit partner or fiscal sponsor</li><li>Sponsor funding</li><li>Verified local resource listings</li></ul></div>
+    </div>
+
+    <details class="ev" id="fd-spec"><summary><span><span class="ev-type">Process</span>How I specified and checked this interaction</span></summary><div class="body">
+      <p><b>Where it started.</b> Freezer Dash came from my kitchen, not from a model. My first description of the game:</p>
+      <blockquote>one veggie, 1 starch!… or they will be eliminated</blockquote>
+      <p>As a chef, I'd already worked out what to do with a real basket of pizza rolls, mixed vegetables and chicken wings:</p>
+      <blockquote>cut the pizza rolls open get the red sauce out to put in the mixed veggies… crouton with the leftover dough!</blockquote>
+      <p>And the grown-up round:</p>
+      <blockquote>they can only add to the meal things that are expiring before the next pay day</blockquote>
+      <p><b>The build spec I wrote</b> (summarized from my instructions):</p>
+      <ol class="checks">
+        <li>Choose your crew: sample family members with their food exclusions and age-appropriate jobs.</li>
+        <li>A working 7-minute countdown with Start, Pause, Resume and Restart.</li>
+        <li>Build a basket across Veggie, Starch, Protein and Extra. Add and remove items, with category indicators that update immediately.</li>
+        <li>Judges' table with explicit rules. Missing a veggie or starch earns a friendly 1-minute bonus round.</li>
+        <li>Use-It-Up: a grown-up round where only items dated before the next sample payday qualify. Label the dates as demo assumptions, and don't imply a date alone proves food is safe.</li>
+        <li>Tonight's dinner: rule-based templates matched to the actual basket. If nothing fits, explain what's missing. Never the same dinner regardless of picks.</li>
+        <li>Jobs and badges: knife, heat and raw-meat tasks labeled grown-up jobs. Badges only when their stated conditions are met.</li>
+      </ol>
+      <p>Plus: apply the crew's allergies and hard-nos everywhere, say plainly that sample filtering can't verify real labels or cross-contact, keep state for this session only, and offer a labeled Quick demo.</p>
+      <p><b>Checks completed</b></p>
+      <ul class="checks">
+        <li><span class="ok">Passed:</span> 16 automated rule tests in Node 22 (crew needs a grown-up; allergy and hard-no blocking; timer start, pause, resume, restart and time-up; add, remove and pick limits; judges and a single bonus round limited to the missing categories; payday cutoff and grown-up-only Use-It-Up; my original basket returns the Pizza Party Sheet Pan; 7 different baskets return 7 different dinners; no-match explanation; excluded items never reach a dinner; knife, heat and raw-meat steps never go to a kid; each badge awarded only on its condition).</li>
+        <li><span class="ok">Passed:</span> 4 scripted click-throughs of this page in a simulated browser (jsdom): the full game with a bonus round, Quick demo, the clock running out and sending the basket to the judges, and Restart clearing the round.</li>
+        <li><span class="ok">Passed:</span> 13 scripted checks in real headless Chrome: the game opens, the clock really counts down and freezes on Pause, judges, dinner, Escape to close, opening from a direct link, keyboard-only play from crew to judges, a 390px phone screen with no sideways scrolling, and reduced-motion mode.</li>
+        <li id="fd-browser-check"><span class="untested">Still needs testing:</span> hands-on play on real phones and in Safari and Firefox, screen readers, timer accuracy when the tab is in the background, and play-testing with real families. All of these checks were run by script; nobody has play-tested it yet.</li>
+      </ul>
+    </div></details>
+
+    <details class="ev"><summary><span><span class="ev-type">Business</span>The SaaS model behind Plenty (hypothesis)</span></summary><div class="body">
+      <p><b>B2B2C:</b> families use Plenty free. The paying customer is a partner organization, such as a family resource center, food bank, foundation or employer. Partners enroll families and see anonymized outcomes in the Partner View. Proposed pricing is a per-enrolled-family monthly fee, often paid from grant funding. This is untested: no partner has signed.</p>
+    </div></details>
+
+    <details class="ev"><summary><span><span class="ev-type">Next</span>How it would be validated</span></summary><div class="body">
+      <p>Gate 1 (before building further): 40 interviews across two segments, a 100-visitor landing-page test, and at least 5 sponsor conversations. Gate 2 (after a 90-day pilot): food lasting until payday, pay-cycle retention, budget accuracy against receipts, and zero allergy violations.</p>
+    </div></details>
+
+    <a class="next" href="#top-takeaway">See the takeaway →</a>
+  </div>
+</section>
+
+</main>
+
+<dialog class="fd" id="fd-game" aria-labelledby="fd-title"></dialog>
+
+<footer id="top-takeaway">
+  <div class="wrap">
+    <div class="takeaway narrow"><strong>What this shows:</strong> I can identify a meaningful problem, investigate it, translate it into clear AI instructions, evaluate the results, and guide the work toward a useful product.</div>
+    <p class="muted narrow" style="margin-top:18px">Plenty is a concept prototype by Sierra Hall. All product data shown is sample data. Research sources are linked where cited.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var links = Array.prototype.slice.call(document.querySelectorAll('.stepper a'));
+  function mark(id){ links.forEach(function(a){ a.classList.toggle('on', a.getAttribute('data-step') === id); }); }
+  mark('why');
+  if (!('IntersectionObserver' in window)) return;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if (e.isIntersecting) mark(e.target.id); });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  ['why','research','prompt','evaluate','refine','plenty'].forEach(function(id){
+    var el = document.getElementById(id); if (el) io.observe(el);
+  });
+})();
+</script>
+<script>
+/*
+ * Freezer Dash: game rules (pure functions, no DOM).
+ * Plenty concept prototype by Sierra Hall. All data below is SAMPLE data.
+ * Works in the browser (window.FreezerDash) and in Node (module.exports).
+ */
+(function (root) {
+  'use strict';
+
+  // ---------- Demo assumptions (labeled as such in the UI) ----------
+  var DEMO = {
+    today: '2026-11-17',      // sample "today"
+    payday: '2026-11-20',     // sample next payday
+    fullMs: 7 * 60 * 1000,    // full game: 7 minutes
+    quickMs: 45 * 1000,       // Quick demo clock
+    bonusMs: 60 * 1000,       // bonus round: 1 minute
+    maxPicksPerPlayer: 3,
+    beatClockFullMs: 60 * 1000,
+    beatClockQuickMs: 10 * 1000
+  };
+
+  var CATEGORIES = [
+    { id: 'veggie', label: 'Veggie' },
+    { id: 'starch', label: 'Starch' },
+    { id: 'protein', label: 'Protein' },
+    { id: 'extra', label: 'Extra' }
+  ];
+
+  // ---------- Sample crew ----------
+  // role: 'grown' or 'kid'. allergies match ingredient allergen tags. hardNo lists ingredient ids.
+  var CREW = [
+    { id: 'mom', name: 'Mom', role: 'grown', age: null, allergies: [], hardNo: [] },
+    { id: 'ray', name: 'Uncle Ray', role: 'grown', age: null, allergies: ['shellfish'], hardNo: [] },
+    { id: 'nia', name: 'Nia', role: 'kid', age: 8, allergies: ['peanut'], hardNo: [] },
+    { id: 'theo', name: 'Theo', role: 'kid', age: 4, allergies: [], hardNo: ['mushrooms'] }
+  ];
+
+  // ---------- Sample freezer & pantry ----------
+  var INGREDIENTS = [
+    { id: 'mixedveg', name: 'Mixed vegetables', cat: 'veggie', tags: [] },
+    { id: 'broccoli', name: 'Broccoli', cat: 'veggie', tags: [] },
+    { id: 'corn', name: 'Corn', cat: 'veggie', tags: [] },
+    { id: 'greenbeans', name: 'Green beans', cat: 'veggie', tags: [] },
+    { id: 'peas', name: 'Peas', cat: 'veggie', tags: [] },
+    { id: 'spinach', name: 'Frozen spinach', cat: 'veggie', tags: [] },
+    { id: 'mushrooms', name: 'Mushrooms', cat: 'veggie', tags: [] },
+
+    { id: 'pizzarolls', name: 'Pizza rolls', cat: 'starch', tags: ['wheat', 'milk'] },
+    { id: 'rice', name: 'Rice', cat: 'starch', tags: [] },
+    { id: 'pasta', name: 'Pasta', cat: 'starch', tags: ['wheat'] },
+    { id: 'tortillas', name: 'Flour tortillas', cat: 'starch', tags: ['wheat'] },
+    { id: 'bread', name: 'Bread', cat: 'starch', tags: ['wheat'] },
+    { id: 'potatoes', name: 'Frozen potatoes', cat: 'starch', tags: [] },
+    { id: 'ramen', name: 'Ramen noodles', cat: 'starch', tags: ['wheat', 'soy'] },
+
+    { id: 'wings', name: 'Chicken wings', cat: 'protein', tags: [], raw: true },
+    { id: 'eggs', name: 'Eggs', cat: 'protein', tags: ['egg'], raw: true },
+    { id: 'blackbeans', name: 'Black beans', cat: 'protein', tags: [] },
+    { id: 'turkey', name: 'Ground turkey', cat: 'protein', tags: [], raw: true },
+    { id: 'peanutbutter', name: 'Peanut butter', cat: 'protein', tags: ['peanut'] },
+    { id: 'fishsticks', name: 'Fish sticks', cat: 'protein', tags: ['fish', 'wheat'] },
+    { id: 'shrimp', name: 'Shrimp', cat: 'protein', tags: ['shellfish'], raw: true },
+    { id: 'tuna', name: 'Canned tuna', cat: 'protein', tags: ['fish'] },
+
+    { id: 'cheese', name: 'Cheese', cat: 'extra', tags: ['milk'] },
+    { id: 'sauce', name: 'Red sauce', cat: 'extra', tags: [] },
+    { id: 'salsa', name: 'Salsa', cat: 'extra', tags: [] },
+    { id: 'soysauce', name: 'Soy sauce', cat: 'extra', tags: ['soy', 'wheat'] },
+    { id: 'butter', name: 'Butter', cat: 'extra', tags: ['milk'] },
+    { id: 'garlic', name: 'Garlic', cat: 'extra', tags: [] }
+  ];
+
+  // ---------- Sample Use-It-Up shelf (grown-ups only) ----------
+  var USE_IT_UP = [
+    { id: 'saladmix', name: 'Bagged salad mix', cat: 'veggie', date: '2026-11-18', tags: [], side: 'Side salad' },
+    { id: 'babyspinach', name: 'Baby spinach', cat: 'veggie', date: '2026-11-18', tags: [] },
+    { id: 'apples', name: 'Apples', cat: 'fruit', date: '2026-11-19', tags: [], side: 'Apple slices' },
+    { id: 'milk', name: 'Milk', cat: 'extra', date: '2026-11-19', tags: ['milk'], side: 'Glass of milk' },
+    { id: 'bananas', name: 'Bananas', cat: 'fruit', date: '2026-11-19', tags: [], side: 'Banana halves' },
+    { id: 'yogurt', name: 'Yogurt cups', cat: 'extra', date: '2026-11-23', tags: ['milk'] },
+    { id: 'shredcheese', name: 'Shredded cheese', cat: 'extra', date: '2026-11-25', tags: ['milk'] },
+    { id: 'uiutortillas', name: 'Corn tortillas', cat: 'starch', date: '2026-11-21', tags: [] },
+    { id: 'cookedrice', name: 'Leftover cooked rice', cat: 'starch', date: '2026-11-16', tags: [] }
+  ];
+
+  // ---------- Meal templates (rule-based, not AI) ----------
+  var VEG = ['mixedveg', 'broccoli', 'corn', 'greenbeans', 'peas', 'spinach', 'mushrooms', 'babyspinach'];
+  var CHEESE = ['cheese', 'shredcheese'];
+  var TORT = ['tortillas', 'uiutortillas'];
+  var RICE = ['rice'];
+
+  function S(text, who, risk) { return { text: text, who: who, risk: risk || null }; }
+
+  var TEMPLATES = [
+    { id: 'pizzaparty', name: 'Pizza Party Sheet Pan',
+      needs: [{ label: 'pizza rolls', any: ['pizzarolls'] }, { label: 'chicken wings', any: ['wings'] }, { label: 'a veggie', any: VEG }],
+      optional: ['garlic', 'butter', 'cheese', 'sauce'],
+      steps: [S('Heat the oven to 425°F and bake the wings until fully cooked', 'grown', 'heat'),
+              S('Handle raw wings and wash hands and surfaces after', 'grown', 'raw'),
+              S('Cut the pizza rolls open and spoon the red sauce into the veggies', 'grown', 'knife'),
+              S('Spread the saucy veggies on the pan', 'older'),
+              S('Toss the leftover dough pieces into croutons', 'older'),
+              S('Set the table', 'any')] },
+    { id: 'pizzarollbake', name: 'Pizza Roll Veggie Bake',
+      needs: [{ label: 'pizza rolls', any: ['pizzarolls'] }, { label: 'a veggie', any: VEG }],
+      optional: ['cheese', 'sauce', 'garlic'],
+      steps: [S('Heat the oven and bake everything together', 'grown', 'heat'),
+              S('Arrange the pizza rolls over the veggies', 'older'),
+              S('Sprinkle the cheese', 'any')] },
+    { id: 'friedrice', name: 'Egg Fried Rice',
+      needs: [{ label: 'rice', any: RICE }, { label: 'eggs', any: ['eggs'] }, { label: 'a veggie', any: VEG }],
+      optional: ['soysauce', 'garlic', 'butter'],
+      steps: [S('Cook the rice and scramble the eggs on the stove', 'grown', 'heat'),
+              S('Crack the eggs into a bowl and wash hands after', 'older'),
+              S('Measure the frozen veggies', 'older'),
+              S('Set the table', 'any')] },
+    { id: 'quesadillas', name: 'Cheesy Quesadillas',
+      needs: [{ label: 'tortillas', any: TORT }, { label: 'cheese', any: CHEESE }],
+      optional: ['blackbeans', 'corn', 'spinach', 'babyspinach', 'salsa'],
+      steps: [S('Cook the quesadillas in a hot pan', 'grown', 'heat'),
+              S('Cut them into triangles', 'grown', 'knife'),
+              S('Fill the tortillas', 'older'),
+              S('Sprinkle the cheese', 'any')] },
+    { id: 'redpasta', name: 'Red Sauce Pasta',
+      needs: [{ label: 'pasta', any: ['pasta'] }, { label: 'red sauce', any: ['sauce'] }],
+      optional: VEG.concat(['cheese', 'garlic', 'turkey']),
+      steps: [S('Boil and drain the pasta', 'grown', 'heat'),
+              S('Brown any meat until fully cooked', 'grown', 'raw'),
+              S('Stir the sauce into the cooled pasta', 'older'),
+              S('Sprinkle the cheese', 'any')] },
+    { id: 'tacobowls', name: 'Turkey Taco Bowls',
+      needs: [{ label: 'ground turkey', any: ['turkey'] }, { label: 'rice or tortillas', any: RICE.concat(TORT) }],
+      optional: ['salsa', 'corn', 'blackbeans', 'cheese', 'shredcheese', 'saladmix'],
+      steps: [S('Brown the turkey until fully cooked; wash hands after raw meat', 'grown', 'raw'),
+              S('Cook the rice or warm the tortillas', 'grown', 'heat'),
+              S('Build the bowls', 'older'),
+              S('Spoon the salsa', 'any')] },
+    { id: 'fishtacos', name: 'Fish Stick Tacos',
+      needs: [{ label: 'fish sticks', any: ['fishsticks'] }, { label: 'tortillas', any: TORT }],
+      optional: ['salsa', 'corn', 'cheese', 'saladmix'],
+      steps: [S('Bake the fish sticks', 'grown', 'heat'),
+              S('Fill the tortillas', 'older'),
+              S('Add the toppings', 'any')] },
+    { id: 'wingsrice', name: 'Wings & Rice Plate',
+      needs: [{ label: 'chicken wings', any: ['wings'] }, { label: 'rice', any: RICE }],
+      optional: VEG.concat(['soysauce', 'garlic']),
+      steps: [S('Bake the wings until fully cooked; wash hands after raw meat', 'grown', 'raw'),
+              S('Cook the rice', 'grown', 'heat'),
+              S('Measure the veggies', 'older'),
+              S('Set the table', 'any')] },
+    { id: 'loadedpotatoes', name: 'Loaded Potatoes',
+      needs: [{ label: 'potatoes', any: ['potatoes'] }, { label: 'cheese', any: CHEESE }],
+      optional: ['broccoli', 'blackbeans', 'butter', 'salsa', 'corn'],
+      steps: [S('Bake the potatoes', 'grown', 'heat'),
+              S('Add the toppings', 'older'),
+              S('Sprinkle the cheese', 'any')] },
+    { id: 'ramenstirfry', name: 'Ramen Stir-Fry',
+      needs: [{ label: 'ramen', any: ['ramen'] }, { label: 'a veggie', any: VEG }],
+      optional: ['eggs', 'soysauce', 'garlic', 'turkey'],
+      steps: [S('Cook the noodles and stir-fry on the stove', 'grown', 'heat'),
+              S('Measure the veggies', 'older'),
+              S('Break the noodle bricks in the bag', 'any')] },
+    { id: 'peanutnoodles', name: 'Peanut Butter Noodles',
+      needs: [{ label: 'noodles', any: ['pasta', 'ramen'] }, { label: 'peanut butter', any: ['peanutbutter'] }],
+      optional: VEG.concat(['soysauce', 'garlic']),
+      steps: [S('Cook and drain the noodles', 'grown', 'heat'),
+              S('Stir the sauce together', 'older'),
+              S('Set the table', 'any')] },
+    { id: 'shrimprice', name: 'Shrimp Fried Rice',
+      needs: [{ label: 'shrimp', any: ['shrimp'] }, { label: 'rice', any: RICE }],
+      optional: VEG.concat(['eggs', 'soysauce', 'garlic']),
+      steps: [S('Cook the shrimp until fully cooked; wash hands after raw seafood', 'grown', 'raw'),
+              S('Stir-fry the rice', 'grown', 'heat'),
+              S('Measure the veggies', 'older')] },
+    { id: 'mushroompasta', name: 'Garlic Mushroom Pasta',
+      needs: [{ label: 'mushrooms', any: ['mushrooms'] }, { label: 'pasta', any: ['pasta'] }],
+      optional: ['butter', 'garlic', 'cheese', 'spinach', 'babyspinach'],
+      steps: [S('Slice the mushrooms', 'grown', 'knife'),
+              S('Cook the pasta and mushrooms', 'grown', 'heat'),
+              S('Sprinkle the cheese', 'any')] },
+    { id: 'tunapasta', name: 'Tuna Pasta',
+      needs: [{ label: 'tuna', any: ['tuna'] }, { label: 'pasta', any: ['pasta'] }],
+      optional: ['peas', 'cheese', 'butter', 'corn'],
+      steps: [S('Boil and drain the pasta', 'grown', 'heat'),
+              S('Open the can', 'grown', 'knife'),
+              S('Stir the tuna and peas into the cooled pasta', 'older')] },
+    { id: 'beanbowls', name: 'Bean & Rice Bowls',
+      needs: [{ label: 'black beans', any: ['blackbeans'] }, { label: 'rice', any: RICE }],
+      optional: ['corn', 'salsa', 'cheese', 'shredcheese', 'saladmix'],
+      steps: [S('Cook the rice and warm the beans', 'grown', 'heat'),
+              S('Build the bowls', 'older'),
+              S('Spoon the salsa', 'any')] },
+    { id: 'wingspotatoes', name: 'Wings & Potatoes Sheet Pan',
+      needs: [{ label: 'chicken wings', any: ['wings'] }, { label: 'potatoes', any: ['potatoes'] }],
+      optional: VEG.concat(['garlic', 'butter']),
+      steps: [S('Bake the wings until fully cooked; wash hands after raw meat', 'grown', 'raw'),
+              S('Handle the hot sheet pan', 'grown', 'heat'),
+              S('Spread the potatoes on the pan', 'older'),
+              S('Set the table', 'any')] },
+    { id: 'grilledcheese', name: 'Grilled Cheese & Greens',
+      needs: [{ label: 'bread', any: ['bread'] }, { label: 'cheese', any: CHEESE }],
+      optional: ['butter', 'spinach', 'babyspinach', 'saladmix'],
+      steps: [S('Cook the sandwiches in a hot pan', 'grown', 'heat'),
+              S('Butter the bread', 'older'),
+              S('Layer the cheese', 'any')] },
+    { id: 'breakfastdinner', name: 'Breakfast for Dinner',
+      needs: [{ label: 'eggs', any: ['eggs'] }, { label: 'bread or potatoes', any: ['bread', 'potatoes'] }],
+      optional: ['cheese', 'butter', 'salsa', 'spinach', 'babyspinach', 'milk'],
+      steps: [S('Scramble the eggs and cook the potatoes or toast', 'grown', 'heat'),
+              S('Whisk the eggs and wash hands after', 'older'),
+              S('Set the table', 'any')] },
+    { id: 'turkeybake', name: 'Turkey Pasta Bake',
+      needs: [{ label: 'ground turkey', any: ['turkey'] }, { label: 'pasta', any: ['pasta'] }],
+      optional: VEG.concat(['sauce', 'cheese', 'garlic']),
+      steps: [S('Brown the turkey until fully cooked; wash hands after raw meat', 'grown', 'raw'),
+              S('Boil the pasta and bake the dish', 'grown', 'heat'),
+              S('Stir it together in the baking dish', 'older'),
+              S('Sprinkle the cheese', 'any')] },
+    { id: 'eggtacos', name: 'Egg Tacos',
+      needs: [{ label: 'eggs', any: ['eggs'] }, { label: 'tortillas', any: TORT }],
+      optional: ['salsa', 'cheese', 'blackbeans', 'spinach'],
+      steps: [S('Scramble the eggs on the stove', 'grown', 'heat'),
+              S('Fill the tortillas', 'older'),
+              S('Spoon the salsa', 'any')] },
+    { id: 'veggierice', name: 'Garlic Veggie Rice',
+      needs: [{ label: 'rice', any: RICE }, { label: 'a veggie', any: VEG }],
+      optional: ['garlic', 'butter', 'soysauce'],
+      steps: [S('Cook the rice and veggies', 'grown', 'heat'),
+              S('Measure the rice', 'older'),
+              S('Set the table', 'any')] },
+    { id: 'butterednoodles', name: 'Buttered Noodles & Veggies',
+      needs: [{ label: 'pasta', any: ['pasta'] }, { label: 'a veggie', any: VEG }],
+      optional: ['butter', 'cheese', 'garlic'],
+      steps: [S('Boil and drain the pasta', 'grown', 'heat'),
+              S('Stir in the butter and veggies', 'older'),
+              S('Sprinkle the cheese', 'any')] },
+    { id: 'fishplate', name: 'Fish Sticks & Potatoes',
+      needs: [{ label: 'fish sticks', any: ['fishsticks'] }, { label: 'potatoes', any: ['potatoes'] }],
+      optional: VEG,
+      steps: [S('Bake the fish sticks and potatoes', 'grown', 'heat'),
+              S('Spread them on the pan', 'older'),
+              S('Set the table', 'any')] }
+  ];
+
+  // ---------- Lookups ----------
+  var ALL_ITEMS = INGREDIENTS.concat(USE_IT_UP);
+  function item(id) { for (var i = 0; i < ALL_ITEMS.length; i++) if (ALL_ITEMS[i].id === id) return ALL_ITEMS[i]; return null; }
+  function member(id, crew) { crew = crew || CREW; for (var i = 0; i < crew.length; i++) if (crew[i].id === id) return crew[i]; return null; }
+  function uniq(a) { var o = []; a.forEach(function (x) { if (o.indexOf(x) < 0) o.push(x); }); return o; }
+
+  // ---------- Crew ----------
+  function validateCrew(selectedIds) {
+    var members = selectedIds.map(function (id) { return member(id); }).filter(Boolean);
+    if (members.length === 0) return { ok: false, reason: 'Pick at least one player.' };
+    if (!members.some(function (m) { return m.role === 'grown'; })) return { ok: false, reason: 'Every crew needs at least one grown-up for the stove, knife and raw-meat jobs.' };
+    return { ok: true, members: members };
+  }
+
+  // Age-appropriate jobs shown on the crew screen.
+  function jobsForMember(m) {
+    if (m.role === 'grown') return ['Knife work', 'Stove and oven', 'Raw meat and seafood', 'Use-It-Up round'];
+    if (m.age >= 6) return ['Measure ingredients', 'Stir cold ingredients', 'Arrange the pan', 'Toss croutons'];
+    if (m.age >= 3) return ['Wash produce', 'Tear greens', 'Set the table'];
+    return ['Cheer the team on'];
+  }
+
+  // Why an item is blocked for this crew, or null if allowed.
+  function exclusionReason(itemId, members) {
+    var it = item(itemId); if (!it) return 'Unknown item.';
+    for (var i = 0; i < members.length; i++) {
+      var m = members[i];
+      for (var j = 0; j < m.allergies.length; j++) {
+        if (it.tags.indexOf(m.allergies[j]) >= 0) return m.name + ': ' + m.allergies[j] + ' allergy';
+      }
+      if (m.hardNo.indexOf(itemId) >= 0) return m.name + ': hard no';
+    }
+    return null;
+  }
+
+  function itemsForCategory(cat, members) {
+    return INGREDIENTS.filter(function (it) { return it.cat === cat; }).map(function (it) {
+      var why = exclusionReason(it.id, members);
+      return { id: it.id, name: it.name, cat: it.cat, allowed: !why, blockedBy: why };
+    });
+  }
+
+  // ---------- Timer (time is injected so it can be tested) ----------
+  function createTimer(durationMs) { return { duration: durationMs, status: 'idle', startedAt: null, elapsedBefore: 0 }; }
+  function elapsed(t, now) { return t.elapsedBefore + (t.status === 'running' ? now - t.startedAt : 0); }
+  function remaining(t, now) { return Math.max(0, t.duration - elapsed(t, now)); }
+  function startTimer(t, now) { if (t.status !== 'idle') return t; return { duration: t.duration, status: 'running', startedAt: now, elapsedBefore: 0 }; }
+  function pauseTimer(t, now) { if (t.status !== 'running') return t; return { duration: t.duration, status: 'paused', startedAt: null, elapsedBefore: elapsed(t, now) }; }
+  function resumeTimer(t, now) { if (t.status !== 'paused') return t; return { duration: t.duration, status: 'running', startedAt: now, elapsedBefore: t.elapsedBefore }; }
+  function restartTimer(t) { return createTimer(t.duration); }
+  function isTimeUp(t, now) { return t.status !== 'idle' && remaining(t, now) === 0; }
+  function formatClock(ms) { var s = Math.ceil(ms / 1000); var m = Math.floor(s / 60); s = s % 60; return m + ':' + (s < 10 ? '0' : '') + s; }
+
+  // ---------- Basket ----------
+  // basket: array of { playerId, itemId, round: 'main' | 'bonus' }
+  function addPick(basket, playerId, itemId, members, opts) {
+    opts = opts || {};
+    var it = item(itemId);
+    if (!it || INGREDIENTS.indexOf(it) < 0) return { ok: false, basket: basket, reason: 'That item is not on the freezer shelf.' };
+    if (!member(playerId, members)) return { ok: false, basket: basket, reason: 'Pick a player first.' };
+    var why = exclusionReason(itemId, members);
+    if (why) return { ok: false, basket: basket, reason: 'Not tonight. ' + why + '.' };
+    if (opts.onlyCats && opts.onlyCats.indexOf(it.cat) < 0) return { ok: false, basket: basket, reason: 'Bonus round is only for the missing ' + opts.onlyCats.join(' and ') + '.' };
+    var mine = basket.filter(function (p) { return p.playerId === playerId; });
+    if (mine.some(function (p) { return p.itemId === itemId; })) return { ok: false, basket: basket, reason: 'Already in your basket.' };
+    var limit = opts.limit == null ? DEMO.maxPicksPerPlayer : opts.limit;
+    if (!opts.bonus && mine.filter(function (p) { return p.round === 'main'; }).length >= limit) return { ok: false, basket: basket, reason: 'Each player can pick up to ' + limit + ' items.' };
+    return { ok: true, basket: basket.concat([{ playerId: playerId, itemId: itemId, round: opts.bonus ? 'bonus' : 'main' }]) };
+  }
+  function removePick(basket, playerId, itemId) {
+    return basket.filter(function (p) { return !(p.playerId === playerId && p.itemId === itemId); });
+  }
+  function categoryCounts(basket) {
+    var c = { veggie: 0, starch: 0, protein: 0, extra: 0 };
+    basket.forEach(function (p) { var it = item(p.itemId); if (it && c[it.cat] != null) c[it.cat]++; });
+    return c;
+  }
+  function teamItems(basket) { return uniq(basket.map(function (p) { return p.itemId; })); }
+
+  // ---------- Judges' table ----------
+  // Rules: (1) every pick is safe for the whole crew, (2) every player picked something,
+  // (3) the team basket has at least 1 veggie and 1 starch. Missing (3) offers one 1-minute bonus round.
+  function judge(basket, members, bonusUsed) {
+    var counts = categoryCounts(basket);
+    var players = members.map(function (m) {
+      var picks = basket.filter(function (p) { return p.playerId === m.id; }).map(function (p) {
+        var it = item(p.itemId); return { id: it.id, name: it.name, cat: it.cat, round: p.round, blockedBy: exclusionReason(it.id, members) };
+      });
+      var notes = [];
+      if (picks.length === 0) notes.push('No picks yet. Help a teammate next round.');
+      picks.forEach(function (p) { if (p.blockedBy) notes.push(p.name + ' is not allowed: ' + p.blockedBy + '.'); });
+      ['veggie', 'starch', 'protein'].forEach(function (cat) { if (picks.some(function (p) { return p.cat === cat; })) notes.push('Brought a ' + cat + '.'); });
+      return { id: m.id, name: m.name, picks: picks, safe: picks.every(function (p) { return !p.blockedBy; }), notes: notes };
+    });
+    var missing = [];
+    if (counts.veggie < 1) missing.push('veggie');
+    if (counts.starch < 1) missing.push('starch');
+    var allSafe = players.every(function (p) { return p.safe; });
+    return {
+      counts: counts, players: players, missing: missing, allSafe: allSafe,
+      passed: missing.length === 0 && allSafe,
+      bonusOffered: missing.length > 0 && !bonusUsed
+    };
+  }
+
+  // ---------- Use-It-Up (grown-ups only) ----------
+  // Dates are demo assumptions. A date alone never proves food is safe.
+  function useItUpStatus(it, today, payday) {
+    today = today || DEMO.today; payday = payday || DEMO.payday;
+    if (it.date < today) return { status: 'past', label: 'Date already passed. Check it; don’t count on it tonight.' };
+    if (it.date < payday) return { status: 'eligible', label: 'Dated before payday. Eligible to add.' };
+    return { status: 'keep', label: 'Dated after payday. Keep it for later.' };
+  }
+  function useItUpShelf(members, today, payday) {
+    return USE_IT_UP.map(function (it) {
+      var st = useItUpStatus(it, today, payday); var why = exclusionReason(it.id, members);
+      return { id: it.id, name: it.name, date: it.date, status: st.status, label: st.label, blockedBy: why, addable: st.status === 'eligible' && !why };
+    });
+  }
+  function addUseItUp(list, playerId, itemId, members, today, payday) {
+    var m = member(playerId, members);
+    if (!m || m.role !== 'grown') return { ok: false, list: list, reason: 'The Use-It-Up round is for grown-ups.' };
+    var it = item(itemId);
+    if (!it || USE_IT_UP.indexOf(it) < 0) return { ok: false, list: list, reason: 'That item is not on the Use-It-Up shelf.' };
+    var st = useItUpStatus(it, today, payday);
+    if (st.status !== 'eligible') return { ok: false, list: list, reason: st.label };
+    var why = exclusionReason(itemId, members);
+    if (why) return { ok: false, list: list, reason: 'Not tonight. ' + why + '.' };
+    if (list.some(function (x) { return x.itemId === itemId; })) return { ok: false, list: list, reason: 'Already added.' };
+    return { ok: true, list: list.concat([{ playerId: playerId, itemId: itemId }]) };
+  }
+
+  // ---------- Tonight's dinner ----------
+  function matchMeal(basketIds, uiuIds, members) {
+    uiuIds = uiuIds || [];
+    var safeBasket = basketIds.filter(function (id) { return !exclusionReason(id, members); });
+    var safeUiu = uiuIds.filter(function (id) { return !exclusionReason(id, members); });
+    var pool = safeBasket.concat(safeUiu);
+    var results = TEMPLATES.map(function (t, idx) {
+      var all = [];
+      t.needs.forEach(function (n) { all = all.concat(n.any); });
+      all = all.concat(t.optional);
+      var templateBlocked = t.needs.some(function (n) { return n.any.every(function (id) { return exclusionReason(id, members); }); });
+      var satisfied = t.needs.filter(function (n) { return n.any.some(function (id) { return pool.indexOf(id) >= 0; }); });
+      var missingNeeds = t.needs.filter(function (n) { return satisfied.indexOf(n) < 0; }).map(function (n) { return n.label; });
+      var usedBasket = safeBasket.filter(function (id) { return all.indexOf(id) >= 0; });
+      var usedUiu = safeUiu.filter(function (id) { return all.indexOf(id) >= 0; });
+      return { template: t, order: idx, complete: missingNeeds.length === 0 && !templateBlocked, blocked: templateBlocked,
+               missing: missingNeeds, satisfiedCount: satisfied.length, usedBasket: usedBasket, usedUiu: usedUiu,
+               score: usedBasket.length * 10 + usedUiu.length };
+    });
+    var complete = results.filter(function (r) { return r.complete; }).sort(function (a, b) { return b.score - a.score || a.order - b.order; });
+    var sideItems = function (used) {
+      return safeUiu.filter(function (id) { return used.indexOf(id) < 0 && item(id).side; }).map(function (id) { return item(id).side; });
+    };
+    if (complete.length) {
+      var best = complete[0];
+      return {
+        matched: true, template: best.template,
+        used: best.usedBasket.concat(best.usedUiu).map(function (id) { return item(id).name; }),
+        sides: sideItems(best.usedUiu),
+        leftover: safeBasket.filter(function (id) { return best.usedBasket.indexOf(id) < 0; }).map(function (id) { return item(id).name; })
+                  .concat(safeUiu.filter(function (id) { return best.usedUiu.indexOf(id) < 0 && !item(id).side; }).map(function (id) { return item(id).name; }))
+      };
+    }
+    var near = results.filter(function (r) { return !r.blocked && r.satisfiedCount > 0; })
+      .sort(function (a, b) { return (b.satisfiedCount / b.template.needs.length) - (a.satisfiedCount / a.template.needs.length) || b.score - a.score || a.order - b.order; });
+    return { matched: false, closest: near.length ? { name: near[0].template.name, missing: near[0].missing } : null,
+             explanation: near.length ? 'No dinner fits this basket yet. ' + near[0].template.name + ' is closest; it still needs ' + near[0].missing.join(' and ') + '.'
+                                      : 'No dinner fits this basket yet. Add a starch and a protein or veggie to unlock a meal.' };
+  }
+
+  // ---------- Jobs ----------
+  var RISK_LABEL = { knife: 'knife', heat: 'stove or oven', raw: 'raw meat or seafood' };
+  function assignJobs(template, members) {
+    var grown = members.filter(function (m) { return m.role === 'grown'; });
+    var older = members.filter(function (m) { return m.role === 'kid' && m.age >= 6; });
+    var young = members.filter(function (m) { return m.role === 'kid' && m.age >= 3 && m.age < 6; });
+    var gi = 0, oi = 0, yi = 0;
+    return template.steps.map(function (s) {
+      var who;
+      if (s.who === 'grown' || s.risk) { who = grown[gi++ % grown.length]; }
+      else if (s.who === 'older') { who = older.length ? older[oi++ % older.length] : grown[gi++ % grown.length]; }
+      else { who = young.length ? young[yi++ % young.length] : older.length ? older[oi++ % older.length] : grown[gi++ % grown.length]; }
+      return { text: s.text, assignee: who.name, grownUpJob: !!s.risk || s.who === 'grown', risk: s.risk ? RISK_LABEL[s.risk] : null };
+    });
+  }
+
+  // ---------- Badges (awarded only when the stated condition is met) ----------
+  var BADGES = [
+    { id: 'veggie', name: 'Veggie Hero', rule: 'Picked at least one veggie.' },
+    { id: 'starch', name: 'Starch Star', rule: 'Picked at least one starch.' },
+    { id: 'protein', name: 'Protein Pro', rule: 'Picked at least one protein.' },
+    { id: 'rainbow', name: 'Rainbow Basket', rule: 'Team basket covered 3 or more categories.' },
+    { id: 'clutch', name: 'Bonus Round Clutch', rule: 'Filled every missing category in the bonus round.' },
+    { id: 'clock', name: 'Beat the Clock', rule: 'Sent to the judges with 60+ seconds left (10+ in Quick demo).' },
+    { id: 'useup', name: 'Use-It-Up Boss', rule: 'A grown-up added at least one eligible Use-It-Up item.' }
+  ];
+  function awardBadges(s) {
+    // s: { basket, members, msLeftAtSubmit, quick, bonusUsed, missingBeforeBonus, missingAfterBonus, uiu }
+    var out = [];
+    s.members.forEach(function (m) {
+      var cats = s.basket.filter(function (p) { return p.playerId === m.id; }).map(function (p) { return item(p.itemId).cat; });
+      if (cats.indexOf('veggie') >= 0) out.push({ badge: 'veggie', to: m.name });
+      if (cats.indexOf('starch') >= 0) out.push({ badge: 'starch', to: m.name });
+      if (cats.indexOf('protein') >= 0) out.push({ badge: 'protein', to: m.name });
+    });
+    var c = categoryCounts(s.basket);
+    var covered = Object.keys(c).filter(function (k) { return c[k] > 0; }).length;
+    if (covered >= 3) out.push({ badge: 'rainbow', to: 'Team' });
+    if (s.bonusUsed && s.missingBeforeBonus.length > 0 && s.missingAfterBonus.length === 0) out.push({ badge: 'clutch', to: 'Team' });
+    var need = s.quick ? DEMO.beatClockQuickMs : DEMO.beatClockFullMs;
+    if (s.msLeftAtSubmit != null && s.msLeftAtSubmit >= need) out.push({ badge: 'clock', to: 'Team' });
+    (s.uiu || []).forEach(function (u) {
+      var m = member(u.playerId, s.members);
+      if (m && m.role === 'grown' && !out.some(function (b) { return b.badge === 'useup' && b.to === m.name; })) out.push({ badge: 'useup', to: m.name });
+    });
+    return out.map(function (b) { var d = BADGES.filter(function (x) { return x.id === b.badge; })[0]; return { id: b.badge, name: d.name, rule: d.rule, to: b.to }; });
+  }
+
+  // Quick demo auto-fill: one safe pick per category spread across players.
+  function sampleBasket(members) {
+    var basket = [];
+    var wants = ['starch', 'veggie', 'protein', 'extra'];
+    var prefs = { starch: ['pizzarolls', 'rice', 'pasta'], veggie: ['mixedveg', 'broccoli', 'corn'], protein: ['wings', 'eggs', 'blackbeans'], extra: ['cheese', 'garlic', 'salsa'] };
+    wants.forEach(function (cat, i) {
+      var p = members[i % members.length];
+      for (var k = 0; k < prefs[cat].length; k++) {
+        var r = addPick(basket, p.id, prefs[cat][k], members);
+        if (r.ok) { basket = r.basket; break; }
+      }
+    });
+    return basket;
+  }
+
+  var api = {
+    DEMO: DEMO, CATEGORIES: CATEGORIES, CREW: CREW, INGREDIENTS: INGREDIENTS, USE_IT_UP: USE_IT_UP, TEMPLATES: TEMPLATES, BADGES: BADGES,
+    item: item, member: member, validateCrew: validateCrew, jobsForMember: jobsForMember, exclusionReason: exclusionReason, itemsForCategory: itemsForCategory,
+    createTimer: createTimer, startTimer: startTimer, pauseTimer: pauseTimer, resumeTimer: resumeTimer, restartTimer: restartTimer,
+    remaining: remaining, isTimeUp: isTimeUp, formatClock: formatClock,
+    addPick: addPick, removePick: removePick, categoryCounts: categoryCounts, teamItems: teamItems,
+    judge: judge, useItUpStatus: useItUpStatus, useItUpShelf: useItUpShelf, addUseItUp: addUseItUp,
+    matchMeal: matchMeal, assignJobs: assignJobs, awardBadges: awardBadges, sampleBasket: sampleBasket
+  };
+  if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.FreezerDash = api;
+})(typeof window !== 'undefined' ? window : this);
+</script>
+<script>
+/*
+ * Freezer Dash: game screens. Needs freezer-dash-logic.js (window.FreezerDash) and a <dialog id="fd-game">.
+ * Session-only state: nothing is saved. Closing the dialog or starting a new round clears the round.
+ */
+(function () {
+  'use strict';
+  var FD = window.FreezerDash;
+  var dlg = document.getElementById('fd-game');
+  if (!FD || !dlg) return;
+
+  var STAGES = [['crew', 'Crew'], ['dash', 'Dash'], ['judges', 'Judges'], ['uiu', 'Use-It-Up'], ['dinner', 'Dinner']];
+  var CAT_ORDER = ['veggie', 'starch', 'protein', 'extra'];
+  var S, tick = null;
+
+  function fresh(keepCrew) {
+    S = {
+      stage: 'crew',
+      selected: keepCrew && S ? S.selected : ['mom', 'nia', 'theo'],
+      quick: keepCrew && S ? S.quick : false,
+      timer: null, bonus: false, bonusUsed: false, onlyCats: null,
+      basket: [], player: null, cat: 'veggie',
+      judged: null, missingBefore: [], msLeftAtSubmit: null,
+      uiu: [], uiuPlayer: null, msg: '', err: false, warned: false
+    };
+  }
+  fresh(false);
+
+  function members() { return S.selected.map(function (id) { return FD.member(id); }); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function fmtDate(d) { var p = d.split('-'); var dt = new Date(+p[0], +p[1] - 1, +p[2]); return dt.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }); }
+  function say(msg, err) { S.msg = msg; S.err = !!err; }
+
+  // ---------- Render ----------
+  function render() {
+    var active = document.activeElement && dlg.contains(document.activeElement) ? document.activeElement.getAttribute('data-k') : null;
+    var stageIdx = STAGES.map(function (s) { return s[0]; }).indexOf(S.stage === 'bonus' ? 'dash' : S.stage);
+    var steps = STAGES.map(function (s, i) { return '<li class="' + (i === stageIdx ? 'on' : i < stageIdx ? 'done' : '') + '"' + (i === stageIdx ? ' aria-current="step"' : '') + '>' + (i + 1) + '. ' + s[1] + '</li>'; }).join('');
+    var body = { crew: vCrew, dash: vDash, bonus: vDash, judges: vJudges, uiu: vUiu, dinner: vDinner }[S.stage]();
+    dlg.innerHTML =
+      '<div class="fd-top"><div class="fd-bar"><h2 id="fd-title">Freezer Dash' + (S.quick ? ' <span class="fd-chip apr">Quick demo</span>' : '') + '</h2>' +
+      ((S.stage === 'dash' || S.stage === 'bonus') ? '<span class="fd-mini' + (FD.remaining(S.timer, Date.now()) <= 30000 ? ' low' : '') + '" id="fd-mini" aria-hidden="true">' + FD.formatClock(FD.remaining(S.timer, Date.now())) + '</span>' : '') +
+      '<button class="fd-x" data-a="close" data-k="close">Close</button></div><ol class="fd-steps" aria-label="Game steps">' + steps + '</ol></div>' +
+      '<div class="fd-body">' +
+      '<p class="fd-sample"><b>Concept prototype, sample data.</b> Allergy and hard-no filtering uses sample tags. It can’t verify real product labels or cross-contact, so always read the package.</p>' +
+      body +
+      '<p class="fd-msg' + (S.err ? ' err' : '') + '" role="status" aria-live="polite">' + esc(S.msg) + '</p>' +
+      '</div>';
+    var el = active && dlg.querySelector('[data-k="' + active + '"]');
+    if (el && !el.disabled) el.focus();
+    else if (active) { var h = dlg.querySelector('.fd-body h3'); if (h) { h.setAttribute('tabindex', '-1'); h.focus(); } }
+  }
+
+  function vCrew() {
+    var cards = FD.CREW.map(function (m) {
+      var on = S.selected.indexOf(m.id) >= 0;
+      var ex = m.allergies.map(function (a) { return '<span class="fd-chip no">' + esc(a) + ' allergy</span>'; })
+        .concat(m.hardNo.map(function (h) { return '<span class="fd-chip no">hard no: ' + esc(FD.item(h).name.toLowerCase()) + '</span>'; }));
+      return '<button class="fd-person" aria-pressed="' + on + '" data-a="toggle" data-id="' + m.id + '" data-k="p-' + m.id + '">' +
+        '<span class="nm">' + esc(m.name) + '<span class="ck" aria-hidden="true">' + (on ? '✓' : '') + '</span></span>' +
+        '<span class="role">' + (m.role === 'grown' ? 'Grown-up' : 'Age ' + m.age) + '</span>' +
+        '<div class="ex">' + (ex.length ? ex.join('') : '<span class="fd-chip">No exclusions</span>') + '</div>' +
+        '<div class="jobs"><b>Jobs:</b> ' + esc(FD.jobsForMember(m).join(', ')) + '</div></button>';
+    }).join('');
+    return '<h3>Choose your crew</h3><p class="fd-lede">Tap the sample family members playing tonight. Their allergies and hard-nos filter every pick and every dinner.</p>' +
+      '<div class="fd-crew">' + cards + '</div>' +
+      '<div class="fd-actions"><button class="fd-btn" data-a="go" data-k="go">Start the dash (7:00)</button>' +
+      '<button class="fd-btn apr" data-a="goquick" data-k="goquick">Quick demo (0:45 clock + auto-fill)</button></div>' +
+      '<p class="fd-rules" style="padding-left:0;list-style:none">Rules: each player picks up to ' + FD.DEMO.maxPicksPerPlayer + ' items. The team needs at least 1 veggie and 1 starch. Knife, stove, oven and raw-meat jobs belong to grown-ups.</p>';
+  }
+
+  function vDash() {
+    var ms = members(), t = S.timer, now = Date.now();
+    var rem = FD.remaining(t, now), running = t.status === 'running';
+    if (!S.player) S.player = ms[0].id;
+    var cats = S.bonus ? S.onlyCats : CAT_ORDER;
+    if (cats.indexOf(S.cat) < 0) S.cat = cats[0];
+    var counts = FD.categoryCounts(S.basket);
+    var ctrl = t.status === 'idle' ? '<button class="fd-btn" data-a="start" data-k="start">Start</button>'
+      : running ? '<button class="fd-btn" data-a="pause" data-k="pause">Pause</button>'
+      : t.status === 'paused' ? '<button class="fd-btn" data-a="resume" data-k="resume">Resume</button>' : '';
+    var restart = S.bonus ? '' : '<button class="fd-btn alt" data-a="restart" data-k="restart">Restart (clears basket)</button>';
+    var players = ms.map(function (m) {
+      var n = S.basket.filter(function (p) { return p.playerId === m.id; }).length;
+      return '<button class="fd-tab" role="tab" aria-selected="' + (S.player === m.id) + '" data-a="player" data-id="' + m.id + '" data-k="pl-' + m.id + '">' + esc(m.name) + ' <span class="fd-ind' + (n ? ' has' : '') + '">' + n + '</span></button>';
+    }).join('');
+    var catTabs = FD.CATEGORIES.filter(function (c) { return cats.indexOf(c.id) >= 0; }).map(function (c) {
+      return '<button class="fd-tab" role="tab" aria-selected="' + (S.cat === c.id) + '" data-a="cat" data-id="' + c.id + '" data-k="c-' + c.id + '">' + c.label +
+        ' <span class="fd-ind' + (counts[c.id] ? ' has' : '') + '" aria-label="' + counts[c.id] + ' in basket">' + (counts[c.id] ? '✓ ' + counts[c.id] : '0') + '</span></button>';
+    }).join('');
+    var mine = S.basket.filter(function (p) { return p.playerId === S.player; }).map(function (p) { return p.itemId; });
+    var items = FD.itemsForCategory(S.cat, ms).map(function (it) {
+      var picked = mine.indexOf(it.id) >= 0;
+      var dis = !it.allowed || !running;
+      return '<button class="fd-item" aria-pressed="' + picked + '" data-a="pick" data-id="' + it.id + '" data-k="i-' + it.id + '"' + (dis ? ' disabled' : '') + '>' + esc(it.name) +
+        (it.allowed ? (picked ? '<span class="in">✓ In basket. Tap to remove.</span>' : '') : '<small>Blocked: ' + esc(it.blockedBy) + '</small>') + '</button>';
+    }).join('');
+    var rows = ms.map(function (m) {
+      var picks = S.basket.filter(function (p) { return p.playerId === m.id; });
+      return '<div class="fd-brow"><span class="who">' + esc(m.name) + '</span>' + (picks.length ? picks.map(function (p) {
+        var it = FD.item(p.itemId);
+        return '<span class="fd-pill">' + esc(it.name) + (p.round === 'bonus' ? ' (bonus)' : '') + '<button aria-label="Remove ' + esc(it.name) + ' from ' + esc(m.name) + '’s basket" data-a="rm" data-p="' + m.id + '" data-id="' + it.id + '" data-k="rm-' + m.id + it.id + '"' + (running ? '' : ' disabled') + '>×</button></span>';
+      }).join('') : '<span class="fd-rules" style="padding:0;margin:0">No picks yet</span>') + '</div>';
+    }).join('');
+    return (S.bonus ? '<h3>Bonus round: find the ' + esc(S.onlyCats.join(' and ')) + '</h3><p class="fd-lede">No elimination tonight. The judges gave you one friendly minute to grab what’s missing.</p>'
+                    : '<h3>Build the basket</h3><p class="fd-lede">Pick a player, pick a shelf, tap to add. Tap again to put it back. ' + (t.status === 'idle' ? 'Press Start when everyone’s ready.' : '') + '</p>') +
+      '<div class="fd-clockrow"><div><div class="fd-clocklbl">' + (S.bonus ? 'BONUS ROUND' : S.quick ? 'QUICK DEMO CLOCK' : 'FREEZER DASH CLOCK') + '</div>' +
+      '<div class="fd-clock' + (rem <= 30000 ? ' low' : '') + '" role="timer" aria-label="Time left" id="fd-clock">' + FD.formatClock(rem) + '</div>' +
+      '<div style="font-size:13px;font-weight:700">' + (t.status === 'paused' ? 'Paused' : running ? 'Running' : 'Ready') + '</div></div>' +
+      '<div class="fd-actions" style="margin:0">' + ctrl + restart + '</div></div>' +
+      '<div class="fd-lbl">Who’s picking</div><div class="fd-tabs" role="tablist" aria-label="Players">' + players + '</div>' +
+      '<div class="fd-lbl">Shelf</div><div class="fd-tabs" role="tablist" aria-label="Categories">' + catTabs + '</div>' +
+      '<div class="fd-items">' + items + '</div>' +
+      (!running ? '<p class="fd-rules" style="padding:0">Picks unlock while the clock is running.</p>' : '') +
+      '<div class="fd-basket"><h4>Team basket</h4>' + rows + '</div>' +
+      '<div class="fd-actions">' + (S.quick && !S.bonus ? '<button class="fd-btn apr" data-a="autofill" data-k="autofill"' + (t.status === 'idle' ? '' : '') + '>Auto-fill sample basket</button>' : '') +
+      '<button class="fd-btn" data-a="submit" data-k="submit">' + (S.bonus ? 'Back to the judges' : 'Send to the judges now') + '</button></div>';
+  }
+
+  function vJudges() {
+    var j = S.judged;
+    var cards = j.players.map(function (p) {
+      return '<div class="fd-card"><h4>' + esc(p.name) + '</h4>' +
+        (p.picks.length ? '<div>' + p.picks.map(function (x) { return '<span class="fd-chip' + (x.blockedBy ? ' no' : '') + '">' + esc(x.name) + ' · ' + x.cat + '</span>'; }).join('') + '</div>' : '') +
+        '<ul>' + p.notes.map(function (n) { return '<li>' + esc(n) + '</li>'; }).join('') + '</ul></div>';
+    }).join('');
+    var c = j.counts;
+    var verdict = j.passed
+      ? '<div class="fd-verdict pass">The judges approve! The team brought ' + c.veggie + ' veggie' + (c.veggie === 1 ? '' : 's') + ' and ' + c.starch + ' starch' + (c.starch === 1 ? '' : 'es') + '.</div>'
+      : '<div class="fd-verdict miss">Almost! The basket is missing a ' + esc(j.missing.join(' and a ')) + '.' + (j.bonusOffered ? ' Nobody gets eliminated: take a 1-minute bonus round.' : ' The bonus round is used, so the dinner screen will explain what’s missing.') + '</div>';
+    var act = j.bonusOffered
+      ? '<button class="fd-btn apr" data-a="bonus" data-k="bonus">Start the 1-minute bonus round</button><button class="fd-btn alt" data-a="touiu" data-k="touiu">Skip to Use-It-Up</button>'
+      : '<button class="fd-btn" data-a="touiu" data-k="touiu">Next: grown-ups’ Use-It-Up round</button>';
+    return '<h3>The judges’ table</h3>' +
+      '<ul class="fd-rules"><li>Every pick must be safe for the whole crew.</li><li>Every player should bring something.</li><li>The team basket needs at least 1 veggie and 1 starch.</li></ul>' +
+      verdict + '<div class="fd-grid2">' + cards + '</div>' +
+      '<p class="fd-rules" style="padding:0">Basket: ' + c.veggie + ' veggie · ' + c.starch + ' starch · ' + c.protein + ' protein · ' + c.extra + ' extra</p>' +
+      '<div class="fd-actions">' + act + '</div>';
+  }
+
+  function vUiu() {
+    var ms = members();
+    var grown = ms.filter(function (m) { return m.role === 'grown'; });
+    if (!S.uiuPlayer) S.uiuPlayer = grown[0].id;
+    var shelf = FD.useItUpShelf(ms);
+    var added = S.uiu.map(function (u) { return u.itemId; });
+    var gTabs = grown.map(function (m) { return '<button class="fd-tab" role="tab" aria-selected="' + (S.uiuPlayer === m.id) + '" data-a="uiuplayer" data-id="' + m.id + '" data-k="g-' + m.id + '">' + esc(m.name) + '</button>'; }).join('');
+    var rows = shelf.map(function (it) {
+      var isIn = added.indexOf(it.id) >= 0;
+      var btn = isIn ? '<button class="fd-btn alt" data-a="uiurm" data-id="' + it.id + '" data-k="u-' + it.id + '">Remove</button>'
+        : '<button class="fd-btn" data-a="uiuadd" data-id="' + it.id + '" data-k="u-' + it.id + '"' + (it.addable ? '' : ' disabled') + '>Add</button>';
+      return '<div class="fd-sh ' + it.status + '"><div><b>' + esc(it.name) + '</b> <span class="d">Sample date: ' + fmtDate(it.date) + '</span><div class="st">' + esc(it.label) + (it.blockedBy ? ' Blocked: ' + esc(it.blockedBy) + '.' : '') + (isIn ? ' Added by ' + esc(FD.member(S.uiu.filter(function (u) { return u.itemId === it.id; })[0].playerId).name) + '.' : '') + '</div></div>' + btn + '</div>';
+    }).join('');
+    return '<h3>Use-It-Up round (grown-ups)</h3>' +
+      '<p class="fd-lede">Time’s up for the kids. Grown-ups may add only food dated before the next payday, so it gets eaten instead of tossed.</p>' +
+      '<p class="fd-sample"><b>Demo assumptions:</b> today is ' + fmtDate(FD.DEMO.today) + ' and the next payday is ' + fmtDate(FD.DEMO.payday) + '. These dates are made up for the demo. A date on a package doesn’t prove food is safe: check how it was stored, how it looks and smells, and the label.</p>' +
+      '<div class="fd-lbl">Grown-up adding</div><div class="fd-tabs" role="tablist" aria-label="Grown-ups">' + gTabs + '</div>' +
+      '<div class="fd-shelf">' + rows + '</div>' +
+      '<div class="fd-actions"><button class="fd-btn" data-a="dinner" data-k="dinner">Serve tonight’s dinner</button></div>';
+  }
+
+  function vDinner() {
+    var ms = members();
+    var meal = FD.matchMeal(FD.teamItems(S.basket), S.uiu.map(function (u) { return u.itemId; }), ms);
+    var earned = FD.awardBadges({ basket: S.basket, members: ms, msLeftAtSubmit: S.msLeftAtSubmit, quick: S.quick, bonusUsed: S.bonusUsed,
+      missingBeforeBonus: S.missingBefore, missingAfterBonus: FD.judge(S.basket, ms, true).missing, uiu: S.uiu });
+    var top = meal.matched
+      ? '<div class="fd-meal"><div class="eb">TONIGHT’S DINNER</div><h3>' + esc(meal.template.name) + '</h3>' +
+        '<p style="margin:8px 0 0">Made from: ' + esc(meal.used.join(', ')) + '.</p>' +
+        (meal.sides.length ? '<p style="margin:4px 0 0">On the side: ' + esc(meal.sides.join(', ')) + '.</p>' : '') +
+        (meal.leftover.length ? '<p style="margin:4px 0 0;color:#FDEBDC">Save for another night: ' + esc(meal.leftover.join(', ')) + '.</p>' : '') + '</div>'
+      : '<div class="fd-verdict miss"><b>No dinner fits this basket yet.</b><br>' + esc(meal.explanation) + '</div>';
+    var jobs = meal.matched ? '<div class="fd-sec"><h3>Who does what</h3><ul class="fd-jobs">' + FD.assignJobs(meal.template, ms).map(function (j) {
+      return '<li><span class="a">' + esc(j.assignee) + '</span><span>' + esc(j.text) + (j.grownUpJob ? ' <span class="fd-chip grown">Grown-up job' + (j.risk ? ': ' + esc(j.risk) : '') + '</span>' : '') + '</span></li>';
+    }).join('') + '</ul></div>' : '';
+    var earnedIds = earned.map(function (b) { return b.id; });
+    var badgeHtml = earned.map(function (b) { return '<div class="fd-badge"><b>' + esc(b.name) + '</b><span>' + esc(b.to) + '. ' + esc(b.rule) + '</span></div>'; }).join('');
+    var notYet = FD.BADGES.filter(function (b) { return earnedIds.indexOf(b.id) < 0; }).map(function (b) { return '<div class="fd-badge not"><b>' + esc(b.name) + '</b><span>Not this round. ' + esc(b.rule) + '</span></div>'; }).join('');
+    return '<h3>Tonight’s dinner</h3><p class="fd-lede">Matched by rules to what’s actually in your basket. This is a template match, not AI.</p>' + top + jobs +
+      '<div class="fd-sec"><h3>Badges</h3><div class="fd-badges">' + (badgeHtml || '<p>No badges this round.</p>') + '</div>' +
+      (notYet ? '<details style="margin-top:10px"><summary>Badges not earned this round</summary><div class="fd-badges" style="margin-top:8px">' + notYet + '</div></details>' : '') + '</div>' +
+      '<div class="fd-actions"><button class="fd-btn" data-a="newround" data-k="newround">New round (same crew)</button><button class="fd-btn alt" data-a="crew" data-k="crewbtn">Change crew</button></div>';
+  }
+
+  // ---------- Timer loop ----------
+  function stopTick() { if (tick) { clearInterval(tick); tick = null; } }
+  function startTick() {
+    stopTick();
+    tick = setInterval(function () {
+      if (!S.timer || (S.stage !== 'dash' && S.stage !== 'bonus')) return stopTick();
+      var now = Date.now(), rem = FD.remaining(S.timer, now);
+      var c = document.getElementById('fd-clock');
+      if (c) { c.textContent = FD.formatClock(rem); c.classList.toggle('low', rem <= 30000); }
+      var mc = document.getElementById('fd-mini');
+      if (mc) { mc.textContent = FD.formatClock(rem); mc.classList.toggle('low', rem <= 30000); }
+      if (!S.warned && S.timer.status === 'running' && rem <= 10000 && rem > 0) { S.warned = true; announce('Ten seconds left.'); }
+      if (FD.isTimeUp(S.timer, now)) { stopTick(); say('Time! Baskets down.'); submit(); }
+    }, 250);
+  }
+  function announce(t) { var m = dlg.querySelector('.fd-msg'); if (m) { m.classList.remove('err'); m.textContent = t; } }
+
+  function beginDash(quick) {
+    var v = FD.validateCrew(S.selected);
+    if (!v.ok) { say(v.reason, true); return render(); }
+    S.quick = quick; S.stage = 'dash'; S.bonus = false; S.basket = []; S.player = S.selected[0]; S.cat = 'veggie';
+    S.timer = FD.createTimer(quick ? FD.DEMO.quickMs : FD.DEMO.fullMs); S.warned = false;
+    if (quick) { S.timer = FD.startTimer(S.timer, Date.now()); startTick(); say('Quick demo: the clock is running. Tap Auto-fill or pick your own.'); }
+    else say('Press Start when the crew is ready.');
+    render();
+  }
+
+  function submit() {
+    stopTick();
+    var now = Date.now(), ms = members();
+    if (S.bonus) {
+      S.bonus = false; S.onlyCats = null;
+      S.judged = FD.judge(S.basket, ms, true);
+    } else {
+      S.msLeftAtSubmit = S.timer.status === 'idle' ? null : FD.remaining(S.timer, now);
+      S.judged = FD.judge(S.basket, ms, false);
+      S.missingBefore = S.judged.missing.slice();
+    }
+    S.stage = 'judges';
+    render();
+  }
+
+  // ---------- Events ----------
+  dlg.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-a]'); if (!b || b.disabled) return;
+    var a = b.getAttribute('data-a'), id = b.getAttribute('data-id'), now = Date.now(), r;
+    S.msg = ''; S.err = false;
+    switch (a) {
+      case 'close': close(); return;
+      case 'toggle':
+        var i = S.selected.indexOf(id);
+        if (i >= 0) S.selected.splice(i, 1); else S.selected.push(id);
+        S.selected.sort(function (x, y) { return FD.CREW.indexOf(FD.member(x)) - FD.CREW.indexOf(FD.member(y)); });
+        var v = FD.validateCrew(S.selected); if (!v.ok) say(v.reason, true);
+        break;
+      case 'go': return beginDash(false);
+      case 'goquick': return beginDash(true);
+      case 'start': S.timer = FD.startTimer(S.timer, now); startTick(); say('Go! Seven minutes on the clock.'); break;
+      case 'pause': S.timer = FD.pauseTimer(S.timer, now); stopTick(); say('Paused.'); break;
+      case 'resume': S.timer = FD.resumeTimer(S.timer, now); startTick(); say('Back on the clock.'); break;
+      case 'restart': stopTick(); S.timer = FD.restartTimer(S.timer); S.basket = []; S.warned = false; say('Clock reset and basket cleared. Press Start.'); break;
+      case 'player': S.player = id; break;
+      case 'cat': S.cat = id; break;
+      case 'pick':
+        if (S.basket.some(function (p) { return p.playerId === S.player && p.itemId === id; })) {
+          S.basket = FD.removePick(S.basket, S.player, id); say(FD.item(id).name + ' put back.');
+        } else {
+          r = FD.addPick(S.basket, S.player, id, members(), S.bonus ? { bonus: true, onlyCats: S.onlyCats } : {});
+          if (r.ok) { S.basket = r.basket; say(FD.member(S.player).name + ' added ' + FD.item(id).name + '.'); } else say(r.reason, true);
+        }
+        break;
+      case 'rm': S.basket = FD.removePick(S.basket, b.getAttribute('data-p'), id); say(FD.item(id).name + ' removed.'); break;
+      case 'autofill':
+        if (S.timer.status === 'idle') { S.timer = FD.startTimer(S.timer, now); startTick(); }
+        S.basket = FD.sampleBasket(members()); say('Sample basket filled using only items safe for this crew.'); break;
+      case 'submit': return submit();
+      case 'bonus':
+        S.bonusUsed = true; S.bonus = true; S.onlyCats = S.judged.missing.slice(); S.stage = 'bonus'; S.cat = S.onlyCats[0];
+        S.timer = FD.startTimer(FD.createTimer(FD.DEMO.bonusMs), now); S.warned = false; startTick();
+        say('Bonus round! One minute for the ' + S.onlyCats.join(' and ') + '.'); break;
+      case 'touiu': S.stage = 'uiu'; break;
+      case 'uiuplayer': S.uiuPlayer = id; break;
+      case 'uiuadd':
+        r = FD.addUseItUp(S.uiu, S.uiuPlayer, id, members());
+        if (r.ok) { S.uiu = r.list; say(FD.item(id).name + ' added.'); } else say(r.reason, true); break;
+      case 'uiurm': S.uiu = S.uiu.filter(function (u) { return u.itemId !== id; }); say(FD.item(id).name + ' removed.'); break;
+      case 'dinner': S.stage = 'dinner'; break;
+      case 'newround': fresh(true); return beginDash(S.quick);
+      case 'crew': fresh(true); S.stage = 'crew'; break;
+    }
+    render();
+  });
+
+  function open() {
+    fresh(false); render();
+    if (typeof dlg.showModal === 'function') { if (!dlg.open) dlg.showModal(); } else dlg.setAttribute('open', '');
+  }
+  function close() {
+    stopTick(); fresh(false);
+    if (typeof dlg.close === 'function' && dlg.open) dlg.close(); else dlg.removeAttribute('open');
+    if (location.hash === '#play-freezer-dash') history.replaceState(null, '', location.pathname + location.search);
+    var l = document.querySelector('[data-fd-open]'); if (l) l.focus();
+  }
+  dlg.addEventListener('close', function () { stopTick(); });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-fd-open]'), function (b) { b.addEventListener('click', open); });
+  if (location.hash === '#play-freezer-dash') open();
+  window.addEventListener('hashchange', function () { if (location.hash === '#play-freezer-dash' && !dlg.open) open(); });
+})();
+</script>
+</body>
+</html>
